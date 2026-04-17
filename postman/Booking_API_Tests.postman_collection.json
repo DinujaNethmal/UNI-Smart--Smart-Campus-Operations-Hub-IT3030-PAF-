@@ -1,0 +1,23 @@
+{
+  "info": {
+    "name": "Module B - Booking Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8081/api/v1" }
+  ],
+  "item": [
+    { "name": "1. Create Booking", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"},{"key":"X-User-Id","value":"1"}], "url": {"raw":"{{baseUrl}}/bookings"}, "body": {"mode":"raw","raw":"{\n  \"resourceId\": 10,\n  \"bookingDate\": \"2026-05-20\",\n  \"startTime\": \"10:00:00\",\n  \"endTime\": \"12:00:00\",\n  \"purpose\": \"Programming workshop\",\n  \"expectedAttendees\": 30\n}"} } },
+    { "name": "2. Create Booking - Conflict", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"},{"key":"X-User-Id","value":"1"}], "url": {"raw":"{{baseUrl}}/bookings"}, "body": {"mode":"raw","raw":"{\n  \"resourceId\": 10,\n  \"bookingDate\": \"2026-05-20\",\n  \"startTime\": \"11:00:00\",\n  \"endTime\": \"13:00:00\",\n  \"purpose\": \"Overlapping test\",\n  \"expectedAttendees\": 10\n}"} } },
+    { "name": "3. Create Booking - Validation Error", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"},{"key":"X-User-Id","value":"1"}], "url": {"raw":"{{baseUrl}}/bookings"}, "body": {"mode":"raw","raw":"{\n  \"resourceId\": 1,\n  \"bookingDate\": \"2026-05-20\"\n}"} } },
+    { "name": "4. Get My Bookings", "request": { "method": "GET", "header": [{"key":"X-User-Id","value":"1"}], "url": {"raw":"{{baseUrl}}/bookings/me"} } },
+    { "name": "5. Get All Bookings (Admin)", "request": { "method": "GET", "header": [{"key":"X-User-Id","value":"99"}], "url": {"raw":"{{baseUrl}}/bookings"} } },
+    { "name": "6. Get All - Filter PENDING", "request": { "method": "GET", "header": [{"key":"X-User-Id","value":"99"}], "url": {"raw":"{{baseUrl}}/bookings?status=PENDING"} } },
+    { "name": "7. Get Booking by ID", "request": { "method": "GET", "header": [{"key":"X-User-Id","value":"1"}], "url": {"raw":"{{baseUrl}}/bookings/1"} } },
+    { "name": "8. Get Booking - Not Found", "request": { "method": "GET", "header": [{"key":"X-User-Id","value":"1"}], "url": {"raw":"{{baseUrl}}/bookings/9999"} } },
+    { "name": "9. Admin Approve", "request": { "method": "PATCH", "header": [{"key":"Content-Type","value":"application/json"},{"key":"X-User-Id","value":"99"}], "url": {"raw":"{{baseUrl}}/bookings/1/review"}, "body": {"mode":"raw","raw":"{\n  \"decision\": \"APPROVE\"\n}"} } },
+    { "name": "10. Admin Reject", "request": { "method": "PATCH", "header": [{"key":"Content-Type","value":"application/json"},{"key":"X-User-Id","value":"99"}], "url": {"raw":"{{baseUrl}}/bookings/2/review"}, "body": {"mode":"raw","raw":"{\n  \"decision\": \"REJECT\",\n  \"reason\": \"Resource under maintenance\"\n}"} } },
+    { "name": "11. Cancel Booking", "request": { "method": "DELETE", "header": [{"key":"X-User-Id","value":"1"}], "url": {"raw":"{{baseUrl}}/bookings/1"} } },
+    { "name": "12. Cancel - Not Owner", "request": { "method": "DELETE", "header": [{"key":"X-User-Id","value":"999"}], "url": {"raw":"{{baseUrl}}/bookings/1"} } }
+  ]
+}
