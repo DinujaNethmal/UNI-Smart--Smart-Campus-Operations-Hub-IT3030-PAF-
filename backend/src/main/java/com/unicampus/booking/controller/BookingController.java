@@ -14,7 +14,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/bookings")
-public class BookingController {
+@CrossOrigin(origins = {
+    "http://localhost:5173",
+    "http://localhost:5175",
+    "http://localhost:5180"
+})public class BookingController {
 
     private final BookingService bookingService;
 
@@ -24,14 +28,14 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<BookingResponseDTO> createBooking(@Valid @RequestBody BookingRequestDTO request) {
-        Long userId = 1L; // temporary until auth is added
+        Long userId = 1L;
         BookingResponseDTO response = bookingService.createBooking(request, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/me")
     public ResponseEntity<List<BookingResponseDTO>> getMyBookings() {
-        Long userId = 1L; // temporary until auth is added
+        Long userId = 1L;
         return ResponseEntity.ok(bookingService.getBookingsForUser(userId));
     }
 
@@ -55,7 +59,7 @@ public class BookingController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BookingResponseDTO> cancelBooking(@PathVariable Long id) {
-        Long userId = 1L; // temporary until auth is added
+        Long userId = 1L;
         return ResponseEntity.ok(bookingService.cancelBooking(id, userId));
     }
 }
