@@ -29,10 +29,13 @@ export default function FacilitiesPage() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this facility?')) {
       try {
+        setDeleting(true);
         await deleteFacility(id);
         setFacilities(prev => prev.filter(f => f.id !== id));
       } catch (error) {
         alert('Failed to delete facility');
+      } finally {
+        setDeleting(false);
       }
     }
   };
