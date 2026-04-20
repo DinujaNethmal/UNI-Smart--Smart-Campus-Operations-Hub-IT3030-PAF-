@@ -21,6 +21,8 @@ function App() {
               <AdminBookingsPage />
             </RequireAdmin>
           } />
+          {/* Facility Catalogue Routes - Added by Dinuja */}
+          <Route path="/catalogue" element={<FacilitiesPage />} />
           <Route path="/facilities" element={<FacilitiesPage />} />
 
         </Routes>
