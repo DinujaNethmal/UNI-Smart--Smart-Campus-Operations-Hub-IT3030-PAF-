@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Positive;
 
 public class FacilityRequestDTO {
     @NotBlank(message = "Facility name is required")
+    @jakarta.validation.constraints.Size(max = 100, message = "Name must not exceed 100 characters")
     private String name;
 
     @NotBlank(message = "Facility type is required")
