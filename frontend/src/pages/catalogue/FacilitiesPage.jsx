@@ -7,6 +7,7 @@ import { useAuth } from '../../hooks/useAuth';
 export default function FacilitiesPage() {
   const [facilities, setFacilities] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const { isAdmin } = useAuth();
 
