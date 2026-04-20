@@ -11,6 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing campus facilities and assets.
+ * Handles business logic for facility lifecycle management.
+ */
 @Service
 public class FacilityService {
 
