@@ -38,6 +38,7 @@ export default function FacilityCard({ facility, onEdit, onDelete, isAdmin = fal
       
       {isAdmin && (
         <div style={{ padding: '0 20px 20px', display: 'flex', gap: 10 }}>
+          {/* TODO: Implement full edit modal in next phase */}
           <button className="btn btn-ghost" style={{ flex: 1 }} onClick={() => onEdit(facility)}>
             Edit
           </button>
