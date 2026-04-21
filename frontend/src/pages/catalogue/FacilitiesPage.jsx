@@ -12,6 +12,8 @@ export default function FacilitiesPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingFacility, setEditingFacility] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [typeFilter, setTypeFilter] = useState('ALL');
+  const [statusFilter, setStatusFilter] = useState('ALL');
   const { isAdmin } = useAuth();
 
   useEffect(() => {
@@ -58,11 +60,17 @@ export default function FacilitiesPage() {
     }
   };
 
-  const filteredFacilities = facilities.filter(f => 
-    f.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    f.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    f.location.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredFacilities = facilities.filter(f => {
+    const matchesSearch = 
+      f.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      f.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      f.location.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesType = typeFilter === 'ALL' || f.type === typeFilter;
+    const matchesStatus = statusFilter === 'ALL' || f.status === statusFilter;
+    
+    return matchesSearch && matchesType && matchesStatus;
+  });
 
   return (
     <>
@@ -90,14 +98,41 @@ export default function FacilitiesPage() {
       )}
 
       <div className="panel" style={{ marginBottom: 24 }}>
-        <div className="search-bar" style={{ margin: 12 }}>
-          <Search size={18} className="search-icon" />
-          <input 
-            type="text" 
-            placeholder="Search by name, type, or location..." 
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+        <div style={{ display: 'flex', gap: 12, padding: 12, flexWrap: 'wrap' }}>
+          <div className="search-bar" style={{ margin: 0, flex: 2, minWidth: 250 }}>
+            <Search size={18} className="search-icon" />
+            <input 
+              type="text" 
+              placeholder="Search by name, type, or location..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <div style={{ flex: 1, minWidth: 150 }}>
+            <select 
+              className="input"
+              value={typeFilter}
+              onChange={(e) => setTypeFilter(e.target.value)}
+            >
+              <option value="ALL">All Types</option>
+              <option value="LECTURE_HALL">Lecture Halls</option>
+              <option value="LAB">Laboratories</option>
+              <option value="MEETING_ROOM">Meeting Rooms</option>
+              <option value="EQUIPMENT">Equipment</option>
+            </select>
+          </div>
+          <div style={{ flex: 1, minWidth: 150 }}>
+            <select 
+              className="input"
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+            >
+              <option value="ALL">All Status</option>
+              <option value="ACTIVE">Active</option>
+              <option value="OUT_OF_SERVICE">Out of Service</option>
+              <option value="MAINTENANCE">Maintenance</option>
+            </select>
+          </div>
         </div>
       </div>
 

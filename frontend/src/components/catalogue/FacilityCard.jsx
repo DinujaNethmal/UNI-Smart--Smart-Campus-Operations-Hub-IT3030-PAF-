@@ -1,49 +1,43 @@
-import { MapPin, Users, Info } from 'lucide-react';
+import { MapPin, Users, Edit, Trash2 } from 'lucide-react';
 
-export default function FacilityCard({ facility, onEdit, onDelete, isAdmin = false }) {
+export default function FacilityCard({ facility, isAdmin, onEdit, onDelete }) {
+  const statusClass = facility.status === 'ACTIVE' ? 'badge-approved' : 'badge-rejected';
+  
   return (
     <div className="panel" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <div className="panel-body" style={{ padding: 0, flex: 1 }}>
-        {facility.imageUrl ? (
-          <img 
-            src={facility.imageUrl} 
-            alt={facility.name} 
-            style={{ width: '100%', height: 160, objectFit: 'cover' }} 
-          />
-        ) : (
-          <div style={{ width: '100%', height: 160, background: 'var(--slate-100)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--slate-400)' }}>
-            <Info size={40} />
-          </div>
-        )}
-        <div style={{ padding: 20 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--slate-900)' }}>{facility.name}</h3>
-            <span className="badge badge-approved">{facility.type}</span>
-          </div>
-          
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <div className="meta-value" style={{ fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: 6 }}>
-              <MapPin size={14} color="var(--slate-400)" /> {facility.location}
-            </div>
-            <div className="meta-value" style={{ fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: 6 }}>
-              <Users size={14} color="var(--slate-400)" /> Capacity: {facility.capacity}
-            </div>
-          </div>
+      <div className="panel-body" style={{ flex: 1, padding: 20 }}>
+        <div className="booking-item-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
+          <div style={{ fontWeight: 700, color: 'var(--slate-900)', fontSize: '1.1rem' }}>{facility.name}</div>
+          <span className={`badge ${statusClass}`}>{facility.status}</span>
+        </div>
+        
+        <div style={{ fontSize: '0.8125rem', color: 'var(--slate-500)', marginBottom: 16 }}>
+          {facility.type.replace('_', ' ')}
+        </div>
 
-          <p style={{ marginTop: 14, fontSize: '0.875rem', color: 'var(--slate-500)', lineHeight: 1.6 }}>
-            {facility.description}
-          </p>
+        <div className="booking-item-meta" style={{ display: 'flex', gap: 24 }}>
+          <div className="meta-block">
+            <div className="meta-label" style={{ fontSize: '0.65rem', color: 'var(--slate-400)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Location</div>
+            <div className="meta-value" style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.875rem', color: 'var(--slate-700)' }}>
+              <MapPin size={14} /> {facility.location}
+            </div>
+          </div>
+          <div className="meta-block">
+            <div className="meta-label" style={{ fontSize: '0.65rem', color: 'var(--slate-400)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Capacity</div>
+            <div className="meta-value" style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.875rem', color: 'var(--slate-700)' }}>
+              <Users size={14} /> {facility.capacity} pax
+            </div>
+          </div>
         </div>
       </div>
-      
+
       {isAdmin && (
-        <div style={{ padding: '0 20px 20px', display: 'flex', gap: 10 }}>
-          {/* TODO: Implement full edit modal in next phase */}
-          <button className="btn btn-ghost" style={{ flex: 1 }} onClick={() => onEdit(facility)}>
-            Edit
+        <div style={{ padding: '12px 18px', borderTop: '1px solid var(--slate-100)', display: 'flex', gap: 10, background: 'var(--slate-50)' }}>
+          <button className="btn btn-ghost" style={{ flex: 1, padding: '8px' }} onClick={() => onEdit(facility)}>
+            <Edit size={16} /> Edit
           </button>
-          <button className="btn btn-danger-text" style={{ flex: 1 }} onClick={() => onDelete(facility.id)}>
-            Delete
+          <button className="btn btn-danger-text" style={{ flex: 1, padding: '8px' }} onClick={() => onDelete(facility.id)}>
+            <Trash2 size={16} /> Delete
           </button>
         </div>
       )}
