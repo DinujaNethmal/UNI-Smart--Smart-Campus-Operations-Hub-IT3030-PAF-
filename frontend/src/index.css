@@ -694,3 +694,51 @@ body {
   .form-row { grid-template-columns: 1fr; }
   .quick-actions-grid { grid-template-columns: 1fr; }
 }
+
+/* ===== Modal & Enhanced Forms ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+.modal-content {
+  background: white;
+  border-radius: var(--radius-lg);
+  width: 100%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  animation: modalSlide 0.3s ease-out;
+}
+@keyframes modalSlide {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--slate-100);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-title { font-size: 1.125rem; font-weight: 700; color: var(--slate-900); }
+.modal-close { border: none; background: transparent; color: var(--slate-400); cursor: pointer; border-radius: 999px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+.modal-close:hover { background: var(--slate-100); color: var(--slate-600); }
+.modal-footer { padding: 16px 24px 24px; display: flex; justify-content: flex-end; gap: 12px; }
+
+.form-grid { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.label { font-size: 0.8125rem; font-weight: 600; color: var(--slate-700); }
+.input { width: 100%; padding: 10px 14px; border: 1px solid var(--slate-200); border-radius: var(--radius-sm); font-size: 0.9375rem; transition: all 0.15s; }
+.input:focus { outline: none; border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+.input.error { border-color: var(--red-500); }
+.error-text { font-size: 0.75rem; color: var(--red-600); font-weight: 500; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+

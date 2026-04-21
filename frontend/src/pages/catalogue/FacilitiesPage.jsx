@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Plus, Search, MapPin, Users } from 'lucide-react';
-import { getFacilities, deleteFacility } from '../../api/catalogueApi';
+import { getFacilities, deleteFacility, createFacility, updateFacility } from '../../api/catalogueApi';
 import FacilityCard from '../../components/catalogue/FacilityCard';
+import FacilityForm from '../../components/catalogue/FacilityForm';
 import { useAuth } from '../../hooks/useAuth';
 
 export default function FacilitiesPage() {
   const [facilities, setFacilities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [editingFacility, setEditingFacility] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const { isAdmin } = useAuth();
 
@@ -23,6 +26,21 @@ export default function FacilitiesPage() {
       console.error('Failed to load facilities:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSave = async (formData) => {
+    try {
+      if (editingFacility) {
+        await updateFacility(editingFacility.id, formData);
+      } else {
+        await createFacility(formData);
+      }
+      setShowForm(false);
+      setEditingFacility(null);
+      loadFacilities();
+    } catch (error) {
+      alert('Failed to save facility');
     }
   };
 
@@ -54,11 +72,22 @@ export default function FacilitiesPage() {
           <div className="page-subtitle">Browse and manage campus locations and equipment.</div>
         </div>
         {isAdmin && (
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={() => setShowForm(true)}>
             <Plus size={18} /> Add Facility
           </button>
         )}
       </div>
+
+      {showForm && (
+        <FacilityForm 
+          facility={editingFacility}
+          onSave={handleSave}
+          onCancel={() => {
+            setShowForm(false);
+            setEditingFacility(null);
+          }}
+        />
+      )}
 
       <div className="panel" style={{ marginBottom: 24 }}>
         <div className="search-bar" style={{ margin: 12 }}>
@@ -87,7 +116,10 @@ export default function FacilitiesPage() {
               facility={f} 
               isAdmin={isAdmin}
               onDelete={handleDelete}
-              onEdit={(fac) => alert('Edit feature coming in the next commit!')}
+              onEdit={(fac) => {
+                setEditingFacility(fac);
+                setShowForm(true);
+              }}
             />
           ))}
         </div>
