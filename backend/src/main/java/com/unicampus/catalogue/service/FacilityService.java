@@ -33,6 +33,9 @@ public class FacilityService {
                 .capacity(request.getCapacity())
                 .description(request.getDescription())
                 .imageUrl(request.getImageUrl())
+                .status(request.getStatus())
+                .availabilityStart(request.getAvailabilityStart())
+                .availabilityEnd(request.getAvailabilityEnd())
                 .build();
 
         Facility saved = facilityRepository.save(facility);

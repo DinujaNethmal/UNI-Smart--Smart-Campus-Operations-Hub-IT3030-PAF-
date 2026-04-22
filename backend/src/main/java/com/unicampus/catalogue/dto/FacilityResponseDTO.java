@@ -2,6 +2,7 @@ package com.unicampus.catalogue.dto;
 
 import com.unicampus.catalogue.entity.Facility;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class FacilityResponseDTO {
     private Long id;
@@ -11,6 +12,8 @@ public class FacilityResponseDTO {
     private Integer capacity;
     private String description;
     private String imageUrl;
+    private LocalTime availabilityStart;
+    private LocalTime availabilityEnd;
     private LocalDateTime createdAt;
 
     public static FacilityResponseDTO fromEntity(Facility facility) {
@@ -22,6 +25,8 @@ public class FacilityResponseDTO {
         response.capacity = facility.getCapacity();
         response.description = facility.getDescription();
         response.imageUrl = facility.getImageUrl();
+        response.availabilityStart = facility.getAvailabilityStart();
+        response.availabilityEnd = facility.getAvailabilityEnd();
         response.createdAt = facility.getCreatedAt();
         return response;
     }
@@ -33,5 +38,7 @@ public class FacilityResponseDTO {
     public Integer getCapacity() { return capacity; }
     public String getDescription() { return description; }
     public String getImageUrl() { return imageUrl; }
+    public LocalTime getAvailabilityStart() { return availabilityStart; }
+    public LocalTime getAvailabilityEnd() { return availabilityEnd; }
     public LocalDateTime getCreatedAt() { return createdAt; }
 }

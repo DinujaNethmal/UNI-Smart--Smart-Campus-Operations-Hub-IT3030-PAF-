@@ -8,6 +8,8 @@ export default function FacilityForm({ facility, onSave, onCancel }) {
     capacity: '',
     location: '',
     status: 'ACTIVE',
+    availabilityStart: '08:00',
+    availabilityEnd: '18:00',
     ...facility
   });
 
@@ -85,6 +87,27 @@ export default function FacilityForm({ facility, onSave, onCancel }) {
                 <option value="OUT_OF_SERVICE">Out of Service</option>
                 <option value="MAINTENANCE">Maintenance</option>
               </select>
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label className="label">Opening Time</label>
+              <input 
+                type="time"
+                className="input"
+                value={formData.availabilityStart}
+                onChange={e => setFormData({...formData, availabilityStart: e.target.value})}
+              />
+            </div>
+            <div className="form-group">
+              <label className="label">Closing Time</label>
+              <input 
+                type="time"
+                className="input"
+                value={formData.availabilityEnd}
+                onChange={e => setFormData({...formData, availabilityEnd: e.target.value})}
+              />
             </div>
           </div>
 

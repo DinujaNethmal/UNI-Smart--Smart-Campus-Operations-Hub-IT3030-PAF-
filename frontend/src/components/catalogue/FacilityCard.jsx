@@ -1,4 +1,4 @@
-import { MapPin, Users, Edit, Trash2 } from 'lucide-react';
+import { MapPin, Users, Edit, Trash2, Clock } from 'lucide-react';
 
 export default function FacilityCard({ facility, isAdmin, onEdit, onDelete }) {
   const statusClass = facility.status === 'ACTIVE' ? 'badge-approved' : 'badge-rejected';
@@ -11,8 +11,12 @@ export default function FacilityCard({ facility, isAdmin, onEdit, onDelete }) {
           <span className={`badge ${statusClass}`}>{facility.status}</span>
         </div>
         
-        <div style={{ fontSize: '0.8125rem', color: 'var(--slate-500)', marginBottom: 16 }}>
+        <div style={{ fontSize: '0.8125rem', color: 'var(--slate-500)', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 6 }}>
           {facility.type.replace('_', ' ')}
+          <span style={{ color: 'var(--slate-300)' }}>•</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <Clock size={14} /> {facility.availabilityStart?.slice(0,5)} - {facility.availabilityEnd?.slice(0,5)}
+          </span>
         </div>
 
         <div className="booking-item-meta" style={{ display: 'flex', gap: 24 }}>

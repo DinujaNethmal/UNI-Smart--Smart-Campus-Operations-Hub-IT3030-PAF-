@@ -3,11 +3,11 @@ package com.unicampus.catalogue.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "facilities")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -27,6 +27,10 @@ public class Facility {
     private Integer capacity;
     private String description;
     private String imageUrl;
+    private String status;
+
+    private LocalTime availabilityStart;
+    private LocalTime availabilityEnd;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
