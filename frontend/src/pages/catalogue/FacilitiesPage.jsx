@@ -14,6 +14,7 @@ export default function FacilitiesPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState('ALL');
   const [statusFilter, setStatusFilter] = useState('ALL');
+  const [minCapacity, setMinCapacity] = useState('');
   const { isAdmin } = useAuth();
 
   useEffect(() => {
@@ -68,8 +69,9 @@ export default function FacilitiesPage() {
     
     const matchesType = typeFilter === 'ALL' || f.type === typeFilter;
     const matchesStatus = statusFilter === 'ALL' || f.status === statusFilter;
+    const matchesCapacity = !minCapacity || f.capacity >= parseInt(minCapacity);
     
-    return matchesSearch && matchesType && matchesStatus;
+    return matchesSearch && matchesType && matchesStatus && matchesCapacity;
   });
 
   return (
@@ -132,6 +134,16 @@ export default function FacilitiesPage() {
               <option value="OUT_OF_SERVICE">Out of Service</option>
               <option value="MAINTENANCE">Maintenance</option>
             </select>
+          </div>
+          <div style={{ flex: '0 0 120px', minWidth: 100 }}>
+            <input 
+              type="number" 
+              className="input" 
+              placeholder="Min Pax" 
+              value={minCapacity}
+              onChange={(e) => setMinCapacity(e.target.value)}
+              title="Minimum Capacity"
+            />
           </div>
         </div>
       </div>
