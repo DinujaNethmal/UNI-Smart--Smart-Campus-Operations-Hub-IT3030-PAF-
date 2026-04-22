@@ -7,7 +7,7 @@ import {
 import { useAuth } from '../hooks/useAuth';
 
 export default function AppShell({ children }) {
-  const { user, isAdmin, switchRole } = useAuth();
+  const { user, isAdmin, switchRole, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const dropRef = useRef(null);
@@ -44,8 +44,9 @@ export default function AppShell({ children }) {
             <Bell size={18} />
             <span className="topbar-badge">4</span>
           </button>
-          <div ref={dropRef} style={{ position: 'relative' }}>
-            <button className="topbar-user" onClick={() => setMenuOpen(o => !o)}>
+          
+          <div ref={dropRef} className="topbar-user-wrapper" style={{ position: 'relative' }}>
+            <button className="topbar-user" onClick={() => setMenuOpen(!menuOpen)}>
               <div className="topbar-avatar">{initials}</div>
               <div className="topbar-user-info">
                 <div className="topbar-user-name">{user.name}</div>
@@ -53,6 +54,7 @@ export default function AppShell({ children }) {
               </div>
               <ChevronDown size={14} color="var(--slate-400)" />
             </button>
+
             {menuOpen && (
               <div className="role-dropdown">
                 <div className="role-dropdown-label">Switch Demo Role</div>
@@ -70,7 +72,14 @@ export default function AppShell({ children }) {
               </div>
             )}
           </div>
-          <button className="topbar-icon-btn"><LogOut size={18} /></button>
+
+          <button 
+            className="topbar-icon-btn" 
+            onClick={() => { if(window.confirm('Do you want to logout?')) logout(); }}
+            title="Logout"
+          >
+            <LogOut size={18} />
+          </button>
         </div>
       </header>
 
@@ -95,12 +104,12 @@ export default function AppShell({ children }) {
           </NavLink>
         )}
 
-        <div className="sidebar-footer">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div className="sidebar-footer" style={{ marginTop: 'auto', borderTop: '1px solid var(--slate-100)', padding: '16px 8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontWeight: 700, color: 'var(--slate-400)' }}>
             <GraduationCap size={14} />
             SLIIT — Faculty of Computing
           </div>
-          <div style={{ marginTop: 2 }}>IT3030 PAF 2026</div>
+          <div style={{ marginTop: 4, opacity: 0.8 }}>IT3030 PAF 2026</div>
         </div>
       </aside>
 

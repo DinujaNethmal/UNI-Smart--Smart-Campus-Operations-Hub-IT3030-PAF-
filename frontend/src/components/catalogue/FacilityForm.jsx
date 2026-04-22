@@ -39,7 +39,7 @@ export default function FacilityForm({ facility, onSave, onCancel }) {
           <button className="modal-close" onClick={onCancel}><X size={20} /></button>
         </div>
         
-        <form onSubmit={handleSubmit} className="form-grid">
+        <form id="fac-form" onSubmit={handleSubmit} className="form-grid">
           <div className="form-group">
             <label className="label">Resource Name</label>
             <input 
@@ -120,14 +120,14 @@ export default function FacilityForm({ facility, onSave, onCancel }) {
               placeholder="e.g. Building A, Level 2"
             />
           </div>
-
-          <div className="modal-footer" style={{ marginTop: 24, padding: 0 }}>
-            <button type="button" className="btn btn-ghost" onClick={onCancel}>Cancel</button>
-            <button type="submit" className="btn btn-primary">
-              <Save size={18} /> {facility ? 'Update Facility' : 'Create Facility'}
-            </button>
-          </div>
         </form>
+
+        <div className="modal-footer" style={{ padding: '24px 32px', borderTop: '1px solid var(--slate-100)', display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
+          <button type="button" className="btn btn-ghost" onClick={onCancel}>Cancel</button>
+          <button type="submit" form="fac-form" className="btn btn-primary">
+            <Save size={18} /> {facility ? 'Update Facility' : 'Create Facility'}
+          </button>
+        </div>
       </div>
     </div>
   );

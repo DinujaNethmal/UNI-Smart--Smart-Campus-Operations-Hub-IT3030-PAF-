@@ -33,5 +33,10 @@ export function useAuth() {
     listeners.forEach(l => l(next));
   };
 
-  return { user, switchRole, isAdmin: user.role === 'ADMIN' };
+  const logout = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    window.location.href = '/';
+  };
+
+  return { user, switchRole, logout, isAdmin: user.role === 'ADMIN' };
 }
