@@ -82,8 +82,6 @@ export default function AdminBookingsPage() {
         </div>
       </div>
 
-<<<<<<< HEAD
-=======
       {/* Stats Cards - Restoring Tarini's expected overview */}
       <div className="stats-grid" style={{ marginBottom: 24 }}>
         <div className="stat-card">
@@ -109,7 +107,6 @@ export default function AdminBookingsPage() {
         </div>
       </div>
 
->>>>>>> Feature/Dinuja
       {error && <div className="alert alert-error"><AlertCircle size={16} /> {error}</div>}
 
       <div className="panel">

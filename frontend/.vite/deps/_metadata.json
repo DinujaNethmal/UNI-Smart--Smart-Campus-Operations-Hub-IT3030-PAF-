@@ -2,7 +2,7 @@
   "hash": "14ef1023",
   "configHash": "9372423b",
   "lockfileHash": "f73fb3e9",
-  "browserHash": "9661b6e4",
+  "browserHash": "65c8cc9d",
   "optimized": {
     "axios": {
       "src": "../../node_modules/axios/index.js",
@@ -16,10 +16,16 @@
       "fileHash": "b883ef21",
       "needsInterop": false
     },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "ca7cf800",
+      "needsInterop": true
+    },
     "react-router-dom": {
       "src": "../../node_modules/react-router-dom/dist/index.mjs",
       "file": "react-router-dom.js",
-      "fileHash": "1e21d9a3",
+      "fileHash": "982a6744",
       "needsInterop": false
     },
     "react": {
@@ -38,6 +44,10 @@
   "chunks": {
     "chunk-BoAXSpZd": {
       "file": "chunk-BoAXSpZd.js",
+      "isDynamicEntry": false
+    },
+    "react-dom-1BZaRNvX": {
+      "file": "react-dom-1BZaRNvX.js",
       "isDynamicEntry": false
     }
   }
