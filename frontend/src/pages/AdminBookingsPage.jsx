@@ -82,6 +82,34 @@ export default function AdminBookingsPage() {
         </div>
       </div>
 
+<<<<<<< HEAD
+=======
+      {/* Stats Cards - Restoring Tarini's expected overview */}
+      <div className="stats-grid" style={{ marginBottom: 24 }}>
+        <div className="stat-card">
+          <div className="stat-icon blue"><CalendarDays size={20} /></div>
+          <div>
+            <div className="stat-value">{counts.ALL}</div>
+            <div className="stat-label">Total Requests</div>
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon yellow"><Clock3 size={20} /></div>
+          <div>
+            <div className="stat-value">{counts.PENDING}</div>
+            <div className="stat-label">Pending Review</div>
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon green"><Check size={20} /></div>
+          <div>
+            <div className="stat-value">{counts.APPROVED}</div>
+            <div className="stat-label">Approved</div>
+          </div>
+        </div>
+      </div>
+
+>>>>>>> Feature/Dinuja
       {error && <div className="alert alert-error"><AlertCircle size={16} /> {error}</div>}
 
       <div className="panel">

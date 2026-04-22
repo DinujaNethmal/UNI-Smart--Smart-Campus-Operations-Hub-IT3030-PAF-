@@ -2,8 +2,14 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import {
   LayoutDashboard, PlusSquare, CalendarCheck, Settings,
+<<<<<<< HEAD
   GraduationCap, Bell, ChevronDown, LogOut, Menu
 } from 'lucide-react';
+=======
+  GraduationCap, Bell, ChevronDown, LogOut, Menu, Building2
+} from 'lucide-react';
+
+>>>>>>> Feature/Dinuja
 import { useAuth } from '../hooks/useAuth';
 
 export default function AppShell({ children }) {
@@ -80,7 +86,18 @@ export default function AppShell({ children }) {
           <LayoutDashboard size={18} /> Dashboard
         </NavLink>
 
+<<<<<<< HEAD
         <div className="sidebar-section">Bookings</div>
+=======
+
+        <div className="sidebar-section">Catalogue</div>
+        <NavLink to="/facilities" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+          <Building2 size={18} /> Campus Catalogue
+        </NavLink>
+
+        <div className="sidebar-section">Bookings</div>
+
+>>>>>>> Feature/Dinuja
         <NavLink to="/my-bookings" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
           <CalendarCheck size={18} /> My Bookings
         </NavLink>
