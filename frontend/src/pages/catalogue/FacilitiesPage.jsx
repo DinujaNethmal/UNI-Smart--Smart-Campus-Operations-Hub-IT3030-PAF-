@@ -100,50 +100,54 @@ export default function FacilitiesPage() {
       )}
 
       <div className="panel" style={{ marginBottom: 24 }}>
-        <div style={{ display: 'flex', gap: 12, padding: 12, flexWrap: 'wrap' }}>
-          <div className="search-bar" style={{ margin: 0, flex: 2, minWidth: 250 }}>
-            <Search size={18} className="search-icon" />
-            <input 
-              type="text" 
-              placeholder="Search by name, type, or location..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div style={{ flex: 1, minWidth: 150 }}>
-            <select 
-              className="input"
-              value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value)}
-            >
-              <option value="ALL">All Types</option>
-              <option value="LECTURE_HALL">Lecture Halls</option>
-              <option value="LAB">Laboratories</option>
-              <option value="MEETING_ROOM">Meeting Rooms</option>
-              <option value="EQUIPMENT">Equipment</option>
-            </select>
-          </div>
-          <div style={{ flex: 1, minWidth: 150 }}>
-            <select 
-              className="input"
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-            >
-              <option value="ALL">All Status</option>
-              <option value="ACTIVE">Active</option>
-              <option value="OUT_OF_SERVICE">Out of Service</option>
-              <option value="MAINTENANCE">Maintenance</option>
-            </select>
-          </div>
-          <div style={{ flex: '0 0 120px', minWidth: 100 }}>
-            <input 
-              type="number" 
-              className="input" 
-              placeholder="Min Pax" 
-              value={minCapacity}
-              onChange={(e) => setMinCapacity(e.target.value)}
-              title="Minimum Capacity"
-            />
+        <div className="form-grid" style={{ padding: 20 }}>
+          <div className="form-row" style={{ alignItems: 'flex-end' }}>
+            <div className="search-bar">
+              <Search size={18} className="search-icon" />
+              <input 
+                type="text" 
+                placeholder="Search by name, type, or location..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className="form-group" style={{ marginBottom: 0 }}>
+              <label className="label">Type</label>
+              <select 
+                className="input"
+                value={typeFilter}
+                onChange={(e) => setTypeFilter(e.target.value)}
+              >
+                <option value="ALL">All Types</option>
+                <option value="LECTURE_HALL">Lecture Halls</option>
+                <option value="LAB">Laboratories</option>
+                <option value="MEETING_ROOM">Meeting Rooms</option>
+                <option value="EQUIPMENT">Equipment</option>
+              </select>
+            </div>
+            <div className="form-group" style={{ marginBottom: 0 }}>
+              <label className="label">Status</label>
+              <select 
+                className="input"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
+                <option value="ALL">All Status</option>
+                <option value="ACTIVE">Active</option>
+                <option value="OUT_OF_SERVICE">Out of Service</option>
+                <option value="MAINTENANCE">Maintenance</option>
+              </select>
+            </div>
+            <div className="form-group" style={{ marginBottom: 0, maxWidth: 120 }}>
+              <label className="label">Min Pax</label>
+              <input 
+                type="number" 
+                className="input" 
+                placeholder="Capacity" 
+                value={minCapacity}
+                onChange={(e) => setMinCapacity(e.target.value)}
+              />
+            </div>
           </div>
         </div>
       </div>

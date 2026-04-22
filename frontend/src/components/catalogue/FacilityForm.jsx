@@ -121,8 +121,8 @@ export default function FacilityForm({ facility, onSave, onCancel }) {
             />
           </div>
 
-          <div className="modal-footer" style={{ marginTop: 20, padding: 0 }}>
-            <button type="button" className="btn btn-secondary" onClick={onCancel}>Cancel</button>
+          <div className="modal-footer" style={{ marginTop: 24, padding: 0 }}>
+            <button type="button" className="btn btn-ghost" onClick={onCancel}>Cancel</button>
             <button type="submit" className="btn btn-primary">
               <Save size={18} /> {facility ? 'Update Facility' : 'Create Facility'}
             </button>
