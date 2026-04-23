@@ -63,6 +63,84 @@ body {
   grid-template-rows: 56px 1fr;
   min-height: 100vh;
 }
+.callback-shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 56px 1fr;
+  min-height: 100vh;
+  background: #eef3f8;
+}
+.callback-topbar,
+.callback-sidebar,
+.callback-main {
+  filter: blur(1px);
+}
+.callback-topbar-skeleton,
+.callback-nav-item,
+.callback-sidebar-footer,
+.callback-page-header,
+.callback-stat-card,
+.callback-panel {
+  background: linear-gradient(90deg, #e5ebf4 0%, #f3f6fb 50%, #e5ebf4 100%);
+  background-size: 220% 100%;
+  animation: callbackPulse 1.6s ease-in-out infinite;
+}
+.callback-topbar-skeleton {
+  width: 170px;
+  height: 34px;
+  border-radius: 999px;
+}
+.callback-sidebar {
+  gap: 10px;
+}
+.callback-nav-item {
+  height: 42px;
+  border-radius: 10px;
+  margin: 4px 4px 0;
+}
+.callback-nav-item.active {
+  background: linear-gradient(90deg, #dfe9fb 0%, #eef5ff 50%, #dfe9fb 100%);
+}
+.callback-sidebar-footer {
+  margin-top: auto;
+  height: 46px;
+  border-radius: 10px;
+  margin: auto 4px 8px;
+}
+.callback-main {
+  padding: 24px 28px;
+}
+.callback-page-header {
+  width: 360px;
+  height: 58px;
+  border-radius: 16px;
+  margin-bottom: 22px;
+}
+.callback-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.callback-stat-card {
+  height: 126px;
+  border-radius: 18px;
+}
+.callback-panel {
+  border-radius: 20px;
+  margin-bottom: 18px;
+}
+.callback-panel-large {
+  height: 260px;
+}
+.callback-panel-medium {
+  height: 180px;
+}
+.callback-toast {
+  top: 82px;
+  right: 28px;
+  z-index: 70;
+}
 
 /* ===== Top Bar ===== */
 .topbar {
@@ -906,6 +984,16 @@ body {
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
   .app-shell { grid-template-columns: 1fr; }
+  .callback-shell { grid-template-columns: 1fr; }
+  .callback-sidebar { display: none; }
+  .callback-main { padding: 18px; }
+  .callback-page-header { width: 100%; }
+  .callback-stats-grid { grid-template-columns: 1fr; }
+  .callback-toast {
+    left: 14px;
+    right: 14px;
+    top: 72px;
+  }
   .sidebar { display: none; }
   .hero-banner { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
@@ -1421,6 +1509,11 @@ body {
 @keyframes authCallbackSpin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@keyframes callbackPulse {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
 }
 
 /* ===== Notifications ===== */

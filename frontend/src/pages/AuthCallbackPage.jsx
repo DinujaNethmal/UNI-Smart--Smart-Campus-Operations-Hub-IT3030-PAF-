@@ -49,12 +49,42 @@ export default function AuthCallbackPage() {
   }, [navigate]);
 
   return (
-    <div className="auth-screen">
-      <div className="auth-screen-glow auth-screen-glow-one" />
-      <div className="auth-screen-glow auth-screen-glow-two" />
+    <div className="callback-shell">
+      <header className="topbar callback-topbar">
+        <div className="topbar-brand">
+          <div className="topbar-logo">SC</div>
+          <div className="topbar-title">
+            Smart Campus
+            <small>Operations Hub</small>
+          </div>
+        </div>
+        <div className="topbar-spacer" />
+        <div className="callback-topbar-skeleton" />
+      </header>
+
+      <aside className="sidebar callback-sidebar">
+        <div className="callback-nav-item active" />
+        <div className="callback-nav-item" />
+        <div className="callback-nav-item" />
+        <div className="callback-nav-item" />
+        <div className="callback-sidebar-footer" />
+      </aside>
+
+      <main className="main callback-main">
+        <div className="callback-page-header" />
+
+        <div className="callback-stats-grid">
+          <div className="callback-stat-card" />
+          <div className="callback-stat-card" />
+          <div className="callback-stat-card" />
+        </div>
+
+        <div className="callback-panel callback-panel-large" />
+        <div className="callback-panel callback-panel-medium" />
+      </main>
 
       <div
-        className={`auth-toast ${
+        className={`auth-toast callback-toast ${
           toast.type === 'success'
             ? 'auth-toast-success'
             : toast.type === 'error'
