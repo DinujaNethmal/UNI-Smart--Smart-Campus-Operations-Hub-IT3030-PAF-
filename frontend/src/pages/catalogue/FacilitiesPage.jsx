@@ -102,14 +102,17 @@ export default function FacilitiesPage() {
       <div className="panel" style={{ marginBottom: 24 }}>
         <div className="form-grid" style={{ padding: 20 }}>
           <div className="form-row" style={{ alignItems: 'flex-end' }}>
-            <div className="search-bar">
-              <Search size={18} className="search-icon" />
-              <input 
-                type="text" 
-                placeholder="Search by name, type, or location..." 
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+            <div className="form-group" style={{ marginBottom: 0, flex: 2 }}>
+              <label className="label">Search</label>
+              <div className="search-bar">
+                <Search size={18} className="search-icon" />
+                <input 
+                  type="text" 
+                  placeholder="Search by name, type, or location..." 
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
             </div>
             <div className="form-group" style={{ marginBottom: 0 }}>
               <label className="label">Type</label>
