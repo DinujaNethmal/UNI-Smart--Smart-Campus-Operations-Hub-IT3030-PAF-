@@ -10,11 +10,10 @@ import {
   ShieldCheck,
   Sparkles,
   UserRound,
-  Waves,
   X,
   XCircle,
 } from 'lucide-react';
-import heroImg from '../assets/hero.png';
+import loginIllustration from '../assets/login-illustration.jpg';
 import { loginWithPassword, redirectToGoogleLogin, registerUser } from '../api/authApi';
 import { refreshAuth } from '../hooks/useAuth';
 
@@ -132,60 +131,60 @@ export default function LoginPage() {
         </div>
       )}
 
-      <div className="auth-premium-layout">
-        <section className="auth-premium-hero">
-          <div className="auth-premium-badge">
-            <Sparkles size={15} />
-            Smart Campus Operations Hub
-          </div>
+      <div className="auth-showcase-shell">
+        <section className="auth-showcase-panel">
+          <div className="auth-showcase-copy">
+            <div className="auth-showcase-badge">
+              <Sparkles size={15} />
+              Smart Campus Operations Hub
+            </div>
 
-          <div className="auth-premium-copy">
-            <h1>Premium access to the full university operations experience.</h1>
+            <h1>Step into a calmer campus workspace.</h1>
             <p>
-              Coordinate facilities, bookings, support requests, and notification flows from
-              one modern workspace for students and administrators.
+              Sign in once and manage bookings, notifications, approvals, and day-to-day
+              operations from one simple place.
             </p>
-          </div>
 
-          <div className="auth-premium-visual">
-            <div className="auth-orbit auth-orbit-one" />
-            <div className="auth-orbit auth-orbit-two" />
-            <img src={heroImg} alt="Smart campus preview" className="auth-premium-image" />
-
-            <div className="auth-floating-card auth-floating-card-top">
-              <div className="auth-floating-icon blue"><ShieldCheck size={16} /></div>
-              <div>
-                <strong>Secure Access</strong>
-                <span>OAuth + manual login</span>
+            <div className="auth-showcase-stats">
+              <div className="auth-showcase-stat">
+                <strong>Google + email</strong>
+                <span>Flexible sign-in for every user</span>
               </div>
-            </div>
-
-            <div className="auth-floating-card auth-floating-card-bottom">
-              <div className="auth-floating-icon amber"><Waves size={16} /></div>
-              <div>
-                <strong>Live Activity</strong>
-                <span>Bookings and alerts in sync</span>
+              <div className="auth-showcase-stat">
+                <strong>Live updates</strong>
+                <span>Approvals and notifications stay in sync</span>
               </div>
             </div>
           </div>
 
-          <div className="auth-premium-metrics">
-            <div className="auth-metric-card">
-              <strong>24/7</strong>
-              <span>Access across campus modules</span>
+          <div className="auth-showcase-art">
+            <div className="auth-art-chip auth-art-chip-top">
+              <ShieldCheck size={16} />
+              <div>
+                <strong>Protected access</strong>
+                <span>Role-aware and session-based</span>
+              </div>
             </div>
-            <div className="auth-metric-card">
-              <strong>Role-based</strong>
-              <span>Separate USER and ADMIN journeys</span>
+
+            <div className="auth-art-frame">
+              <img
+                src={loginIllustration}
+                alt="Illustrated welcome character"
+                className="auth-showcase-image"
+              />
             </div>
-            <div className="auth-metric-card">
-              <strong>Unified</strong>
-              <span>Notifications, bookings, catalogue</span>
+
+            <div className="auth-art-chip auth-art-chip-bottom">
+              <div className="auth-art-dot" />
+              <div>
+                <strong>Always in flow</strong>
+                <span>Bookings, alerts, and status in one place</span>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="auth-premium-card">
+        <section className="auth-form-panel">
           <div className="auth-card-header">
             <div className="auth-mode-switch">
               <button
@@ -214,7 +213,16 @@ export default function LoginPage() {
             <p>{pageCopy.subtitle}</p>
           </div>
 
-          <form className="auth-form" onSubmit={handleSubmit}>
+          <button className="auth-google-button auth-google-button-inline" type="button" onClick={redirectToGoogleLogin}>
+            <span className="auth-google-mark">G</span>
+            Continue with Google
+          </button>
+
+          <div className="auth-divider">
+            <span>or continue with email</span>
+          </div>
+
+          <form className={`auth-form ${mode === 'register' ? 'is-register' : ''}`} onSubmit={handleSubmit}>
             {mode === 'register' && (
               <label className="auth-field">
                 <span>Full name</span>
@@ -297,15 +305,6 @@ export default function LoginPage() {
               {!submitting && <ArrowRight size={18} />}
             </button>
           </form>
-
-          <div className="auth-divider">
-            <span>or continue with</span>
-          </div>
-
-          <button className="auth-google-button" type="button" onClick={redirectToGoogleLogin}>
-            <span className="auth-google-mark">G</span>
-            Google
-          </button>
 
           <div className="auth-switch-row">
             <span className="auth-switch-text">{pageCopy.switchLead}</span>
