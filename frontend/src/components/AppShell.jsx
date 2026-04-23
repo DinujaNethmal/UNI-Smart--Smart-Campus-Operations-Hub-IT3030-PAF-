@@ -2,7 +2,7 @@ import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import {
   LayoutDashboard, CalendarCheck, Settings,
-  GraduationCap, Bell, ChevronDown, LogOut, Menu, Building2, CheckCheck, X
+  GraduationCap, Bell, ChevronDown, LogOut, Menu, Building2, CheckCheck, X, Ticket
 } from 'lucide-react';
 
 import { useAuth } from '../hooks/useAuth';
@@ -333,6 +333,12 @@ export default function AppShell() {
             <Settings size={18} /> Manage Bookings
           </NavLink>
         )}
+
+        {/* ✅ TICKETS FIXED */}
+        <NavLink to="/tickets" className="sidebar-link">
+          <Ticket size={18} /> Tickets
+        </NavLink>
+
 
         <div className="sidebar-footer">
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>

@@ -79,20 +79,40 @@ public class AuthController {
     public ResponseEntity<AuthUserResponseDTO> login(
             @Valid @RequestBody LoginRequestDTO request,
             HttpServletRequest httpServletRequest) {
-        String normalizedEmail = request.getEmail().trim().toLowerCase();
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(normalizedEmail, request.getPassword())
-        );
+        try {
+            String email = request.getEmail().trim().toLowerCase();
 
-        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-        securityContext.setAuthentication(authentication);
-        SecurityContextHolder.setContext(securityContext);
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            email,
+                            request.getPassword()
+                    )
+            );
 
-        HttpSession session = httpServletRequest.getSession(true);
-        session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+            securityContext.setAuthentication(authentication);
+            SecurityContextHolder.setContext(securityContext);
 
-        CustomUserPrincipal principal = (CustomUserPrincipal) authentication.getPrincipal();
-        return ResponseEntity.ok(AuthUserResponseDTO.fromUser(principal.getUser()));
+            HttpSession session = httpServletRequest.getSession(true);
+            session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof CustomUserPrincipal customUserPrincipal) {
+                return ResponseEntity.ok(
+                        AuthUserResponseDTO.fromUser(customUserPrincipal.getUser())
+                );
+            }
+
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user type");
+
+        } catch (Exception e) {
+            e.printStackTrace(); // IMPORTANT for debugging
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "Invalid email or password"
+            );
+        }
     }
 }
