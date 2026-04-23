@@ -4,24 +4,28 @@ import java.time.LocalDateTime;
 
 public class NotificationResponseDTO {
 
-    private Long id;
-    private Long userId;
-    private String title;
-    private String message;
-    private String type;
-    private boolean isRead;
-    private LocalDateTime createdAt;
+    private final Long id;
+    private final Long userId;
+    private final String title;
+    private final String message;
+    private final String type;
+    private final boolean read;
+    private final LocalDateTime createdAt;
 
-    public NotificationResponseDTO() {
-    }
-
-    public NotificationResponseDTO(Long id, Long userId, String title, String message, String type, boolean isRead, LocalDateTime createdAt) {
+    public NotificationResponseDTO(
+            Long id,
+            Long userId,
+            String title,
+            String message,
+            String type,
+            boolean read,
+            LocalDateTime createdAt) {
         this.id = id;
         this.userId = userId;
         this.title = title;
         this.message = message;
         this.type = type;
-        this.isRead = isRead;
+        this.read = read;
         this.createdAt = createdAt;
     }
 
@@ -46,7 +50,7 @@ public class NotificationResponseDTO {
     }
 
     public boolean isRead() {
-        return isRead;
+        return read;
     }
 
     public LocalDateTime getCreatedAt() {

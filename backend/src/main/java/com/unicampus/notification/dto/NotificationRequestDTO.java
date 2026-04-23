@@ -1,21 +1,32 @@
 package com.unicampus.notification.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 public class NotificationRequestDTO {
 
-    private Long userId;
+    @NotNull
+    private Long recipientUserId;
+
+    @NotBlank
+    @Size(max = 200)
     private String title;
+
+    @NotBlank
+    @Size(max = 1000)
     private String message;
+
+    @NotBlank
+    @Size(max = 50)
     private String type;
 
-    public NotificationRequestDTO() {
+    public Long getRecipientUserId() {
+        return recipientUserId;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setRecipientUserId(Long recipientUserId) {
+        this.recipientUserId = recipientUserId;
     }
 
     public String getTitle() {

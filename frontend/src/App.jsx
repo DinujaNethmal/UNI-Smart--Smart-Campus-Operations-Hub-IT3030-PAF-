@@ -1,32 +1,64 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AppShell from './components/AppShell';
+import RequireAuth from './components/RequireAuth';
 import RequireAdmin from './components/RequireAdmin';
 import DashboardPage from './pages/DashboardPage';
 import CreateBookingPage from './pages/CreateBookingPage';
 import MyBookingsPage from './pages/MyBookingsPage';
 import AdminBookingsPage from './pages/AdminBookingsPage';
 import FacilitiesPage from './pages/catalogue/FacilitiesPage';
+import LoginPage from './pages/LoginPage';
+import AuthCallbackPage from './pages/AuthCallbackPage';
+import NotificationsPage from './pages/NotificationsPage';
 
 
 function App() {
   return (
     <BrowserRouter>
-      <AppShell>
-        <Routes>
-          <Route path="/" element={<DashboardPage />} />
-          <Route path="/new" element={<CreateBookingPage />} />
-          <Route path="/my-bookings" element={<MyBookingsPage />} />
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
+        <Route element={<AppShell />}>
+          <Route path="/" element={
+            <RequireAuth>
+              <DashboardPage />
+            </RequireAuth>
+          } />
+          <Route path="/new" element={
+            <RequireAuth>
+              <CreateBookingPage />
+            </RequireAuth>
+          } />
+          <Route path="/my-bookings" element={
+            <RequireAuth>
+              <MyBookingsPage />
+            </RequireAuth>
+          } />
+          <Route path="/notifications" element={
+            <RequireAuth>
+              <NotificationsPage />
+            </RequireAuth>
+          } />
           <Route path="/admin" element={
-            <RequireAdmin>
-              <AdminBookingsPage />
-            </RequireAdmin>
+            <RequireAuth>
+              <RequireAdmin>
+                <AdminBookingsPage />
+              </RequireAdmin>
+            </RequireAuth>
           } />
           {/* Facility Catalogue Routes - Added by Dinuja */}
-          <Route path="/catalogue" element={<FacilitiesPage />} />
-          <Route path="/facilities" element={<FacilitiesPage />} />
-
-        </Routes>
-      </AppShell>
+          <Route path="/catalogue" element={
+            <RequireAuth>
+              <FacilitiesPage />
+            </RequireAuth>
+          } />
+          <Route path="/facilities" element={
+            <RequireAuth>
+              <FacilitiesPage />
+            </RequireAuth>
+          } />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }

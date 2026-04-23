@@ -6,3 +6,5 @@ bin/
 
 # Optional: ignore Maven target directory
 target/
+
+.env

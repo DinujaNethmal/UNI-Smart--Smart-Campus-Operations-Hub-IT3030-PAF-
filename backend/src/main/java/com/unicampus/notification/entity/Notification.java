@@ -1,6 +1,8 @@
 package com.unicampus.notification.entity;
 
+import com.unicampus.auth.entity.User;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,46 +13,41 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
+    @Column(nullable = false, length = 200)
     private String title;
 
-    @Column(length = 1000)
+    @Column(nullable = false, length = 1000)
     private String message;
 
-    private String type; // BOOKING, TICKET, COMMENT
+    @Column(nullable = false, length = 50)
+    private String type;
 
-    private boolean isRead = false;
+    @Column(name = "is_read", nullable = false)
+    private boolean read;
 
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    public Notification() {
-    }
-
-    public Notification(Long userId, String title, String message, String type, boolean isRead, LocalDateTime createdAt) {
-        this.userId = userId;
-        this.title = title;
-        this.message = message;
-        this.type = type;
-        this.isRead = isRead;
-        this.createdAt = createdAt;
-    }
-
     @PrePersist
-    public void prePersist() {
+    public void onCreate() {
         this.createdAt = LocalDateTime.now();
+        this.read = false;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getTitle() {
@@ -78,11 +75,11 @@ public class Notification {
     }
 
     public boolean isRead() {
-        return isRead;
+        return read;
     }
 
     public void setRead(boolean read) {
-        isRead = read;
+        this.read = read;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -4,6 +4,7 @@ const API_BASE = 'http://localhost:8081/api/v1';
 
 const bookingClient = axios.create({
   baseURL: `${API_BASE}/bookings`,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
