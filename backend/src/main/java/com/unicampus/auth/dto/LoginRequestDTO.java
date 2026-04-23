@@ -2,14 +2,16 @@ package com.unicampus.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class LoginRequestDTO {
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email address is required")
+    @Email(message = "Enter a valid email address")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Password is required")
+    @Size(max = 100, message = "Password must be 100 characters or fewer")
     private String password;
 
     public String getEmail() {

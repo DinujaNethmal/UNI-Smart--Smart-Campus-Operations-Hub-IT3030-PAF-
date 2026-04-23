@@ -23,13 +23,16 @@ public class AuthService {
 
     @Transactional
     public AuthUserResponseDTO registerLocalUser(RegisterRequestDTO request) {
-        userRepository.findByEmail(request.getEmail()).ifPresent(existingUser -> {
+        String normalizedName = request.getName().trim();
+        String normalizedEmail = request.getEmail().trim().toLowerCase();
+
+        userRepository.findByEmail(normalizedEmail).ifPresent(existingUser -> {
             throw new IllegalArgumentException("An account with this email already exists");
         });
 
         User user = new User();
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
+        user.setName(normalizedName);
+        user.setEmail(normalizedEmail);
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         user.setProvider(AuthProvider.LOCAL);
         user.setRole(Role.USER);

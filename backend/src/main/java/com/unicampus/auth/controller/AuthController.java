@@ -79,8 +79,10 @@ public class AuthController {
     public ResponseEntity<AuthUserResponseDTO> login(
             @Valid @RequestBody LoginRequestDTO request,
             HttpServletRequest httpServletRequest) {
+        String normalizedEmail = request.getEmail().trim().toLowerCase();
+
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(normalizedEmail, request.getPassword())
         );
 
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();

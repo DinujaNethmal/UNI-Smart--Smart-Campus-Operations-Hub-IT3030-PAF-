@@ -1323,12 +1323,26 @@ body {
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
   transform: translateY(-1px);
 }
+.auth-input-wrap input.has-error {
+  border-color: rgba(220, 38, 38, 0.55);
+  background: rgba(254, 242, 242, 0.92);
+}
+.auth-input-wrap input.has-error:focus {
+  border-color: var(--red-600);
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+}
 .auth-input-icon {
   position: absolute;
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--slate-400);
+}
+.auth-field-error {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--red-600);
+  line-height: 1.4;
 }
 .auth-password-toggle {
   position: absolute;
