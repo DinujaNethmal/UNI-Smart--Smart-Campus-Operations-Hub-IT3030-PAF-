@@ -1,96 +1,98 @@
-# Admin credential
-Mail - admin@gmail.com
-Password - 123456
+# UNI-Smart--Smart-Campus-Operations-Hub-IT3030-PAF-
+Smart Campus Operations Hub
+# Smart Campus Operations Hub
 
+## Module C — Ticket Management  
 
-
-# Smart Campus Operations Hub — IT3030 PAF 2026
-
-A comprehensive university operations management system built with **Spring Boot** and **React**. This platform modernizes campus life by centralizing facility bookings and maintenance incident handling.
-
-## 🚀 Project Overview
-The Smart Campus Operations Hub enables students and staff to browse campus resources, manage time-sensitive bookings, and report maintenance issues. The system implements a robust role-based access control (RBAC) system for Users and Admins.
 
 ---
 
-## 🛠️ Tech Stack
-- **Backend:** Java 21, Spring Boot 3.2.5, Spring Data JPA, Hibernate, Jakarta Validation.
-- **Frontend:** React 19, Vite, Tailwind CSS, Lucide Icons, Axios.
-- **Database:** MySQL 8.0.
-- **Tools:** Maven, Git, GitHub Actions (CI/CD).
+## 📌 Overview
+
+The Ticket Management module handles incident reporting and support requests within the Smart Campus system. Users can create and track tickets, while admins/technicians manage, assign, and resolve them.
+
+### Key Features
+- Create support/incident tickets
+- Track ticket status (OPEN → IN_PROGRESS → RESOLVED → CLOSED)
+- Add attachments (screenshots, logs, documents)
+- Admin/Technician assignment and resolution handling
+- Role-based access control
 
 ---
 
-## 👥 Team Contributions & Module Allocation
-To support individual assessment, the system is divided into focused modules.
+## 🔄 Ticket Workflow
+OPEN → IN_PROGRESS → RESOLVED → CLOSED
+OPEN → REJECTED
 
-### **Member 1 (You): Facilities & Assets Catalogue (Module A)**
-Implemented the end-to-end resource management lifecycle:
-- **REST API:** Developed 5 endpoints (`GET`, `POST`, `PUT`, `DELETE`) for facility management.
-- **Metadata Management:** Tracking capacity, category, location, and status (ACTIVE/OUT_OF_SERVICE).
-- **Availability Windows:** Implemented operating hour windows for every campus resource.
-- **Advanced Filtering:** Built a multi-level search system (Search text + Type dropdown + Status dropdown + Minimum Capacity filter).
-- **Backend Persistence:** Designed the MySQL schema for facilities.
+## 🌐 Base URL
+http://localhost:8081/api/v1/tickets
 
-### **Member 2: Booking Management (Module B)**
-- Booking workflow (PENDING → APPROVED/REJECTED).
-- Real-time status updates and conflict avoidance logic.
-- Admin dashboard for request reviews.
+## 📡 REST API Endpoints
 
-*(Additional members for Module C & D)*
+| Method | Endpoint | Description | Role |
+|--------|----------|-------------|------|
+| POST | /api/v1/tickets | Create ticket | USER |
+| GET | /api/v1/tickets/me | Get my tickets | USER |
+| GET | /api/v1/tickets | Get all tickets | ADMIN / TECH |
+| GET | /api/v1/tickets/{id} | Get ticket by ID | USER / ADMIN |
+| PATCH | /api/v1/tickets/{id}/status | Update status | ADMIN / TECH |
+| PATCH | /api/v1/tickets/{id}/assign | Assign technician | ADMIN |
+| POST | /api/v1/tickets/{id}/attachments | Upload file | USER / TECH |
+| DELETE | /api/v1/tickets/{id} | Delete ticket | ADMIN |
 
 ---
 
-## ⚙️ Setup & Installation
+## 📝 Create Ticket
 
-### 1. Prerequisites
-- JDK 21 or higher
-- Node.js (v18+) & npm
-- MySQL Server
+### Request
+```json
+{
+  "title": "WiFi not working in Lab 3",
+  "description": "Cannot connect to campus WiFi",
+  "category": "NETWORK",
+  "priority": "HIGH"
+}
 
-### 2. Database Configuration
-1. Create a MySQL database named `smart_campus_db`.
-2. Update `backend/src/main/resources/application.properties`:
-   ```properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/smart_campus_db
-   spring.datasource.username=root
-   spring.datasource.password=12345
-   ```
+Response
+{
+  "id": 101,
+  "title": "WiFi not working in Lab 3",
+  "status": "OPEN",
+  "priority": "HIGH",
+  "createdAt": "2026-04-23T10:15:00"
+}
 
-### 3. Running the Backend
-```bash
+🔄 Update Ticket Status
+Request
+{
+  "status": "IN_PROGRESS"
+}
+
+or
+
+{
+  "status": "RESOLVED",
+  "resolutionNote": "Issue fixed by resetting router"
+}
+👨‍💻 Assign Technician
+{
+  "technicianId": 3
+}
+
+🚀 Setup Instructions
+Backend
 cd backend
-./mvnw spring-boot:run
-```
-*API runs on: [http://localhost:8081](http://localhost:8081)*
+mvn spring-boot:run
 
-### 4. Running the Frontend
-```bash
+Runs on:
+
+http://localhost:8081
+Frontend
 cd frontend
 npm install
 npm run dev
-```
-*App runs on: [http://localhost:5173](http://localhost:5173)*
 
----
+Runs on:
 
-## 📑 API Endpoints (Module A - Member 1)
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/v1/facilities` | Retrieve all facilities with optional filters. |
-| `GET` | `/api/v1/facilities/{id}` | Get detailed metadata for a specific resource. |
-| `POST` | `/api/v1/facilities` | Create a new campus resource (Admin Only). |
-| `PUT` | `/api/v1/facilities/{id}` | Update existing resource metadata/availability. |
-| `DELETE` | `/api/v1/facilities/{id}` | Remove a resource from the catalogue. |
+http://localhost:5173
 
----
-
-## 🎨 UI/UX Design
-The project uses a premium, modern design language featuring:
-- **Glassmorphic components** and subtle micro-animations.
-- **Role-based Dashboards** for Students and Admins.
-- **Dynamic Status Badges** for real-time visibility.
-
----
-**SLIIT - Faculty of Computing**  
-*IT3030 – Programming Applications and Frameworks*
