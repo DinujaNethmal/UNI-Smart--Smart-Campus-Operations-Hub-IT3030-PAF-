@@ -71,6 +71,10 @@ export default function LoginPage() {
     setToast({ type, message });
   };
 
+  const wait = (ms) => new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -101,6 +105,7 @@ export default function LoginPage() {
       }
 
       await refreshAuth();
+      await wait(1800);
       navigate('/', { replace: true });
     } catch (requestError) {
       const message = requestError?.response?.data?.message || 'Authentication failed. Please try again.';

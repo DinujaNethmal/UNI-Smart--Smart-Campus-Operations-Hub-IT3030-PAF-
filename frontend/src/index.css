@@ -1414,6 +1414,15 @@ body {
   }
 }
 
+.auth-callback-spinner {
+  animation: authCallbackSpin 0.9s linear infinite;
+}
+
+@keyframes authCallbackSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* ===== Notifications ===== */
 .notification-summary {
   display: grid;
