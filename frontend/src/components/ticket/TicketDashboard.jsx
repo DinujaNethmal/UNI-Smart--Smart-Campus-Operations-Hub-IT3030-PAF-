@@ -1,25 +1,31 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaFolderOpen, FaSpinner, FaCheckCircle, FaLock } from "react-icons/fa";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  FaFolderOpen,
+  FaSpinner,
+  FaCheckCircle,
+  FaLock
+} from "react-icons/fa";
+
+import { AlertCircle, PlusSquare, Search } from "lucide-react";
 
 export default function TicketDashboard() {
   const [search, setSearch] = useState("");
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [statusFilter, setStatusFilter] = useState(""); // ✅ filter by clicking summary box
+  const [statusFilter, setStatusFilter] = useState("");
+
   const navigate = useNavigate();
 
-  // Fetch tickets from backend
   useEffect(() => {
     const fetchTickets = async () => {
       try {
         const res = await fetch("http://localhost:8081/api/tickets");
-        if (!res.ok) throw new Error("Failed to fetch tickets");
         const data = await res.json();
         setTickets(data);
       } catch (err) {
-        setError(err.message);
+        setError("Failed to load tickets");
       } finally {
         setLoading(false);
       }
@@ -27,156 +33,180 @@ export default function TicketDashboard() {
     fetchTickets();
   }, []);
 
-  // Filter tickets by search + status
   const filteredTickets = tickets.filter((t) => {
     const matchesSearch =
       t.title?.toLowerCase().includes(search.toLowerCase()) ||
-      t.id?.toString().toLowerCase().includes(search.toLowerCase()) ||
-      t.status?.toLowerCase().includes(search.toLowerCase());
+      t.id?.toString().includes(search);
 
     const matchesStatus =
-      !statusFilter || t.status?.toUpperCase() === statusFilter.toUpperCase();
+      !statusFilter || t.status === statusFilter;
 
     return matchesSearch && matchesStatus;
   });
 
-  // Status counts
-  const statusCounts = {
-    OPEN: tickets.filter((t) => t.status === "OPEN").length,
-    IN_PROGRESS: tickets.filter((t) => t.status === "IN_PROGRESS").length,
-    RESOLVED: tickets.filter((t) => t.status === "RESOLVED").length,
-    CLOSED: tickets.filter((t) => t.status === "CLOSED").length,
-  };
-
-  const statusBoxes = [
-    { label: "Open", key: "OPEN", count: statusCounts.OPEN, icon: <FaFolderOpen className="text-red-600 text-2xl" /> },
-    { label: "In Progress", key: "IN_PROGRESS", count: statusCounts.IN_PROGRESS, icon: <FaSpinner className="text-yellow-600 text-2xl" /> },
-    { label: "Resolved", key: "RESOLVED", count: statusCounts.RESOLVED, icon: <FaCheckCircle className="text-green-600 text-2xl" /> },
-    { label: "Closed", key: "CLOSED", count: statusCounts.CLOSED, icon: <FaLock className="text-gray-600 text-2xl" /> },
-  ];
+  const open = tickets.filter(t => t.status === "OPEN").length;
+  const inProgress = tickets.filter(t => t.status === "IN_PROGRESS").length;
+  const resolved = tickets.filter(t => t.status === "RESOLVED").length;
+  const closed = tickets.filter(t => t.status === "CLOSED").length;
 
   return (
-  
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-3xl font-bold text-blue-700 mb-6">Ticket Dashboard</h1>
-      <h2 className="text-xl font-semibold mb-2">Manage and track all campus maintenance tickets</h2>
+    <>
 
-      {loading   && <p>Loading tickets...</p>}
-      {error && <p className="text-red-600">Error: {error}</p>}
+      {/* HEADER (same as booking dashboard) */}
+      <div className="page-header">
+        <div>
+          <h1 className="page-title">Ticket Dashboard</h1>
+          <div className="page-subtitle">
+            Manage and track all maintenance tickets
+          </div>
+        </div>
+      </div>
+
+      {/* ERROR */}
+      {error && (
+        <div className="alert alert-error">
+          <AlertCircle size={16} /> {error}
+        </div>
+      )}
+
+      {loading && <div className="empty-state">Loading tickets...</div>}
 
       {!loading && !error && (
         <>
-          {/* Status Summary */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            {statusBoxes.map((box) => (
-              <div
-                key={box.key}
-                onClick={() => setStatusFilter(box.key)} // ✅ click to filter
-                className={`cursor-pointer bg-white shadow rounded-lg p-4 text-center hover:bg-blue-50 ${
-                  statusFilter === box.key ? "ring-2 ring-blue-500" : ""
-                }`}
-              >
-                {box.icon}
-                <p className="text-lg font-semibold text-gray-700 mt-2">{box.label}</p>
-                <p className="text-2xl font-bold text-blue-600">{box.count}</p>
-              </div>
-            ))}
+
+          {/* STATS (same structure as booking dashboard) */}
+          <div className="stats-grid">
+
+            <div
+              className={`stat-card ${statusFilter === "OPEN" ? "active" : ""}`}
+              onClick={() =>
+                setStatusFilter(statusFilter === "OPEN" ? "" : "OPEN")
+              }
+            >
+              <div className="stat-icon blue"><FaFolderOpen /></div>
+              <div className="stat-value">{open}</div>
+              <div className="stat-label">Open</div>
+            </div>
+
+            <div
+              className={`stat-card ${statusFilter === "IN_PROGRESS" ? "active" : ""}`}
+              onClick={() =>
+                setStatusFilter(statusFilter === "IN_PROGRESS" ? "" : "IN_PROGRESS")
+              }
+            >
+              <div className="stat-icon yellow"><FaSpinner /></div>
+              <div className="stat-value">{inProgress}</div>
+              <div className="stat-label">In Progress</div>
+            </div>
+
+            <div
+              className={`stat-card ${statusFilter === "RESOLVED" ? "active" : ""}`}
+              onClick={() =>
+                setStatusFilter(statusFilter === "RESOLVED" ? "" : "RESOLVED")
+              }
+            >
+              <div className="stat-icon green"><FaCheckCircle /></div>
+              <div className="stat-value">{resolved}</div>
+              <div className="stat-label">Resolved</div>
+            </div>
+
+            <div
+              className={`stat-card ${statusFilter === "CLOSED" ? "active" : ""}`}
+              onClick={() =>
+                setStatusFilter(statusFilter === "CLOSED" ? "" : "CLOSED")
+              }
+            >
+              <div className="stat-icon red"><FaLock /></div>
+              <div className="stat-value">{closed}</div>
+              <div className="stat-label">Closed</div>
+            </div>
+
           </div>
 
-          {/* Search */}
-          <div className="flex justify-between items-center mb-4">
+          {/* TOOLBAR (same style as booking quick actions area) */}
+          <div className="toolbar">
+
             <button
               onClick={() => navigate("/create-ticket")}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"    
+              className="btn btn-primary btn-lg"
             >
-              + Create Ticket
+              <PlusSquare size={16} /> Create Ticket
             </button>
-            
+
+          </div><br/>
+
+          {/* Updated Search Bar */}
+          <div className="flex items-center bg-gray-100 rounded-lg px-3 py-2 shadow-inner">
+            <Search size={18} className="text-gray-500 mr-2" />
             <input
               type="text"
-              placeholder="Search tickets..."
+              placeholder="Search by name, type, or location..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="border rounded-md p-2 w-64 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-500"
             />
-          </div>
-          {/* Tickets Table */}
-          <div className="bg-white shadow rounded-lg overflow-x-auto">
-            <table className="min-w-full border-collapse">
-              <thead className="bg-gray-200">
-                <tr>
-                  <th className="p-3 text-left">Ticket ID</th>
-                  <th className="p-3 text-left">Title</th>
-                  <th className="p-3 text-left">Location</th>
-                  <th className="p-3 text-left">Priority</th>
-                  <th className="p-3 text-left">Status</th>
-                  <th className="p-3 text-left">Assigned To</th>
-                  <th className="p-3 text-left">Date Created</th>
-                  <th className="p-3 text-left">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredTickets.map((t) => (
-                  <tr key={t.id} className="border-t hover:bg-gray-50">
-                    <td className="p-3">{t.id}</td>
-                    <td className="p-3">{t.title}</td>
-                    <td className="p-3">{t.resource}</td>
-                    <td className="p-3">
-                      <span
-                        className={`px-2 py-1 rounded text-sm ${
-                          t.priority === "HIGH"
-                            ? "bg-red-100 text-red-600"
-                            : t.priority === "MEDIUM"
-                            ? "bg-yellow-100 text-yellow-600"
-                            : "bg-green-100 text-green-600"
-                        }`}
-                      >
-                        {t.priority}
-                      </span>
-                    </td>
-                    <td className="p-3">
-                      <span
-                        className={`px-2 py-1 rounded text-sm ${
-                          t.status === "OPEN"
-                            ? "bg-red-100 text-red-600"
-                            : t.status === "IN_PROGRESS"
-                            ? "bg-yellow-100 text-yellow-600"
-                            : t.status === "RESOLVED"
-                            ? "bg-green-100 text-green-600"
-                            : t.status === "CLOSED"
-                            ? "bg-gray-200 text-gray-700"
-                            : "bg-gray-100 text-gray-500"
-                        }`}
-                      >
-                        {t.status}
-                      </span>
-                    </td>
-                    <td className="p-3">{t.assignedTo || "Unassigned"}</td>
-                    <td className="p-3">{t.createdAt?.substring(0, 10)}</td>
-                    <td className="p-3 space-x-2">
-                      <button
-                        onClick={() => navigate(`/ticket-detail/${t.id}`)}
-                        className="text-green-600 "
-                      >
-                        View
-                      </button>
-                      <br/>
-                      <br/>
+          </div><br/>
 
-                      <button
-                        onClick={() => navigate(`/ticket-edit/${t.id}`)}
-                        className="text-blue-600 "
-                      >
-                        Edit
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* PANEL (same as booking recent panel) */}
+          <div className="panel">
+
+            <div className="panel-header">
+              <div className="panel-title">Tickets</div>
+              <Link to="/tickets" className="panel-link">
+                View All
+              </Link>
+            </div>
+
+            {filteredTickets.length === 0 ? (
+              <div className="empty-state">No tickets found</div>
+            ) : (
+              filteredTickets.slice(0, 5).map((t) => (
+                <div key={t.id} className="booking-item">
+
+                  <div className="booking-item-header">
+                    <div>
+                      <div style={{ fontWeight: 600 }}>
+                        #{t.id} - {t.title}
+                      </div>
+                      <div className="text-muted">
+                        {t.resource}
+                      </div>
+                    </div>
+
+                    <span className={`badge status-${t.status}`}>
+                      {t.status}
+                    </span>
+                  </div>
+
+                  <div style={{ marginTop: 8, fontSize: "13px", color: "#64748b" }}>
+                    Priority:{" "}
+                    <span className={`badge priority-${t.priority}`}>
+                      {t.priority}
+                    </span>
+                  </div>
+
+                  <div className="booking-actions flex gap-3 mt-3">
+                    <button
+                      onClick={() => navigate(`/ticket-detail/${t.id}`)}
+                      className="px-3 py-1 text-sm "
+                    >
+                      View
+                    </button>
+                    <button
+                      onClick={() => navigate(`/ticket-edit/${t.id}`)}
+                      className="px-3 py-1 text-sm  text-blue-600 rounded hover:bg-blue-200"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+
           </div>
+
         </>
       )}
-    </div>
+    </>
   );
 }

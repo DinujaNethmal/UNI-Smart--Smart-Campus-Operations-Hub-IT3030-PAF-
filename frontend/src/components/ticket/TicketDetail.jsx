@@ -1,151 +1,145 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function TicketDetails() {
+export default function TicketDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [ticket, setTicket] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // ✅ GET DATA FROM BACKEND
   useEffect(() => {
-    const fetchTicket = async () => {
-      try {
-        const res = await fetch(`http://localhost:8081/api/tickets/${id}`);
+    fetch(`http://localhost:8081/api/tickets/${id}`)
+      .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch ticket");
-        const data = await res.json();
+        return res.json();
+      })
+      .then((data) => {
         setTicket(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
         setLoading(false);
-      }
-    };
-
-    fetchTicket();
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
   }, [id]);
 
-  if (loading) return <p className="p-6">Loading ticket...</p>;
-  if (error) return <p className="p-6 text-red-600">Error: {error}</p>;
-  if (!ticket) return <p className="p-6">Ticket not found</p>;
+  // LOADING
+  if (loading) return <p className="empty-state">Loading ticket...</p>;
 
-  // Normalize images safely
-  const images =
-    ticket.images ||
-    ticket.imageUrls ||
-    ticket.attachments ||
-    [];
+  // ERROR
+  if (error) return <p className="empty-state">{error}</p>;
 
-  console.log(ticket);
-  console.log("TICKET:", ticket);
-  console.log("IMAGES:", ticket.images);
+  // NOT FOUND
+  if (!ticket) return <p className="empty-state">Ticket not found</p>;
+
+  // ✅ STATUS UPDATE (FRONTEND ONLY FOR NOW)
+  const updateStatus = (status) => {
+    setTicket((prev) => ({
+      ...prev,
+      status,
+    }));
+
+    // 👉 later you can call backend API here
+    // fetch(`http://localhost:8081/api/tickets/${id}/status`, {...})
+  };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="ticket-page">
 
-      {/* Back Button */}
-      <button
-        onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-black hover:text-gray-700 mb-4"
-      >
-        <FaArrowLeft />
-        <span>Back</span>
+      {/* BACK */}
+      <button className="back-btn" onClick={() => navigate(-1)}>
+        ← Back
       </button>
 
-      <h2 className="text-2xl font-bold mb-2">Ticket Details</h2>
-      <p className="text-gray-600 mb-6">
-        View full information about this ticket
-      </p>
+      {/* CARD */}
+      <div className="ticket-card">
 
-      {/* Details */}
-      <div className="space-y-4">
+        <h2>{ticket.title}</h2>
+        <p className="ticket-id">#{ticket.id}</p>
 
-        <div><span className="font-semibold">Ticket ID:</span> {ticket.id}</div>
-        <div><span className="font-semibold">Title:</span> {ticket.title}</div>
-        <div><span className="font-semibold">Category:</span> {ticket.category}</div>
-        <div><span className="font-semibold">Resource/Location:</span> {ticket.resource}</div>
-        <div><span className="font-semibold">Description:</span> {ticket.description}</div>
-        
-        {ticket.images && ticket.images.length > 0 && (
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold mb-2">Attached Images</h3>
-            <div className="grid grid-cols-2 gap-4">
-              {ticket.images.map((img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  alt={`Attachment ${index + 1}`}
-                  className="w-full h-48 object-cover rounded border"
-                />
-              ))}
-            </div>
+        {/* GRID */}
+        <div className="ticket-grid">
+
+          <div>
+            <label>Status</label>
+            <span className={`badge ${ticket.status?.toLowerCase()}`}>
+              {ticket.status}
+            </span>
+          </div>
+
+          <div>
+            <label>Priority</label>
+            <span>{ticket.priority}</span>
+          </div>
+
+          <div>
+            <label>Category</label>
+            <span>{ticket.category}</span>
+          </div>
+
+          <div>
+            <label>Location</label>
+            <span>{ticket.resource}</span>
+          </div>
+
+          <div>
+            <label>Created Date</label>
+            <span>{ticket.createdAt?.substring(0, 10)}</span>
+          </div>
+
+        </div>
+
+        {/* DESCRIPTION */}
+        <div className="ticket-desc">
+          <label>Description</label>
+          <p>{ticket.description}</p>
+        </div>
+
+        {/* CONTACT */}
+        <div className="ticket-contact">
+          <p><b>Name:</b> {ticket.name}</p>
+          <p><b>Email:</b> {ticket.email}</p>
+          <p><b>Phone:</b> {ticket.phone}</p>
+        </div>
+
+        {/* IMAGES */}
+        {ticket.images?.length > 0 && (
+          <div className="ticket-images">
+            {ticket.images.map((img, i) => (
+              <img key={i} src={img} alt="attachment" />
+            ))}
           </div>
         )}
 
-        <div>
-          <span className="font-semibold">Priority:</span>{" "}
-          <span
-            className={`px-2 py-1 rounded text-sm ${
-              ticket.priority === "HIGH"
-                ? "bg-red-100 text-red-600"
-                : ticket.priority === "MEDIUM"
-                ? "bg-yellow-100 text-yellow-600"
-                : "bg-green-100 text-green-600"
-            }`}
+        {/* ACTIONS */}
+        <div className="ticket-actions">
+
+          <button
+            className="btn-primary"
+            onClick={() => updateStatus("IN_PROGRESS")}
           >
-            {ticket.priority}
-          </span>
-        </div>
+            Mark In Progress
+          </button>
 
-        <div>
-          <span className="font-semibold">Status:</span>{" "}
-          <span
-            className={`px-2 py-1 rounded text-sm ${
-              ticket.status === "OPEN"
-                ? "bg-red-100 text-red-600"
-                : ticket.status === "IN_PROGRESS"
-                ? "bg-yellow-100 text-yellow-600"
-                : ticket.status === "RESOLVED"
-                ? "bg-green-100 text-green-600"
-                : "bg-gray-200 text-gray-700"
-            }`}
+          <button
+            className="btn-resolve"
+            onClick={() => updateStatus("RESOLVED")}
           >
-            {ticket.status}
-          </span>
+            Mark Resolved
+          </button>
+
+          <button
+            className="btn-secondary"
+            onClick={() => navigate("/tickets-list")}
+          >
+            Back to List
+          </button>
+
         </div>
 
-        <div>
-          <span className="font-semibold">Assigned To:</span>{" "}
-          {ticket.assignedTo || "Unassigned"}
-        </div>
-
-        <div>
-          <span className="font-semibold">Created At:</span>{" "}
-          {ticket.createdAt?.substring(0, 10)}
-        </div>
-
-        <div>
-          <span className="font-semibold">Contact:</span>{" "}
-          {ticket.name} ({ticket.phone}, {ticket.email})
-        </div>
-      </div>
-
-      {/* Buttons */}
-      <div className="flex space-x-4 mt-6">
-        <button
-          onClick={() => navigate(`/ticket-edit/${ticket.id}`)}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Update Ticket
-        </button>
-
-        <button
-          onClick={() => navigate("/tickets-list")}
-          className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400"
-        >
-          Back to List
-        </button>
       </div>
     </div>
   );

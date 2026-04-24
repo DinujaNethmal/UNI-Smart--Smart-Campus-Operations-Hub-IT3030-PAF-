@@ -1896,3 +1896,273 @@ body {
   }
 }
 
+/* =======================
+   TICKET PAGE GLOBAL CSS
+======================= */
+
+.ticket-page {
+  padding: 20px;
+  background: #f5f6fa;
+  min-height: 100vh;
+}
+
+/* BACK BUTTON */
+.back-btn {
+  background: transparent;
+  border: none;
+  color: #2563eb;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+/* CARD */
+.ticket-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* TITLE */
+.ticket-card h2 {
+  margin-bottom: 5px;
+}
+
+/* ID */
+.ticket-id {
+  color: gray;
+  margin-bottom: 15px;
+}
+
+/* GRID */
+.ticket-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.ticket-grid label {
+  font-size: 12px;
+  color: gray;
+  display: block;
+}
+
+/* DESCRIPTION */
+.ticket-desc {
+  margin-top: 15px;
+}
+
+.ticket-desc p {
+  background: #f9fafb;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+/* CONTACT */
+.ticket-contact {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+/* IMAGES */
+.ticket-images {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ticket-images img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* ACTIONS */
+.ticket-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: #2563eb;
+  color: white;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-resolve {
+  background: #16a34a;
+  color: white;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background: #dc2626;
+  color: white;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: #6b7280;
+  color: white;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* BADGES */
+.badge {
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  display: inline-block;
+}
+
+/* STATUS COLORS */
+.open { background: #facc15; }
+.progress { background: #60a5fa; color: white; }
+.resolved { background: #34d399; }
+.closed { background: #9ca3af; }
+
+/* PRIORITY */
+.high { background: #ef4444; color: white; }
+.medium { background: #f59e0b; }
+.low { background: #10b981; }
+
+.ticket-page {
+  padding: 20px;
+  background: #f5f7fb;
+  font-family: Arial, sans-serif;
+}
+
+/* CARD */
+.ticket-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* TABLE */
+.ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ticket-table th {
+  background: #eef2f7;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.ticket-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+/* ROW HOVER */
+.ticket-table tr:hover {
+  background: #f9fbff;
+}
+
+/* ACTION BUTTONS */
+.ticket-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* BUTTON BASE */
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* PRIMARY (VIEW) */
+.btn-primary {
+  background: #2f80ed;
+  color: white;
+}
+
+/* SECONDARY (EDIT) */
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+/* DELETE (IMPORTANT ACTION) */
+.btn-danger {
+  background: #e74c3c;
+  color: white;
+}
+
+/* BADGES */
+.badge {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  display: inline-block;
+}
+
+/* STATUS COLORS */
+.status-OPEN {
+  background: #f39c12;
+  color: white;
+}
+
+.status-IN_PROGRESS {
+  background: #3498db;
+  color: white;
+}
+
+.status-RESOLVED {
+  background: #2ecc71;
+  color: white;
+}
+
+.status-CLOSED {
+  background: #2c3e50;
+  color: white;
+}
+
+/* PRIORITY COLORS */
+.priority-HIGH {
+  background: #e74c3c;
+  color: white;
+}
+
+.priority-MEDIUM {
+  background: #f39c12;
+  color: white;
+}
+
+.priority-LOW {
+  background: #27ae60;
+  color: white;
+}
+
