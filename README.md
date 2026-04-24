@@ -1,3 +1,9 @@
+# Admin credential
+Mail - admin@gmail.com
+Password - 123456
+
+
+
 # Smart Campus Operations Hub — IT3030 PAF 2026
 
 A comprehensive university operations management system built with **Spring Boot** and **React**. This platform modernizes campus life by centralizing facility bookings and maintenance incident handling.
