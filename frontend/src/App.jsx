@@ -11,7 +11,6 @@ import LoginPage from './pages/LoginPage';
 import AuthCallbackPage from './pages/AuthCallbackPage';
 import NotificationsPage from './pages/NotificationsPage';
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -46,7 +45,7 @@ function App() {
               </RequireAdmin>
             </RequireAuth>
           } />
-          {/* Facility Catalogue Routes - Added by Dinuja */}
+          {/* Facility Catalogue Routes */}
           <Route path="/catalogue" element={
             <RequireAuth>
               <FacilitiesPage />
