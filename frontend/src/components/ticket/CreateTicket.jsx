@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
-function CreateTicket({ onTicketCreated }) {
+export default function CreateTicket({ onTicketCreated }) {
   const [form, setForm] = useState({
     category: "",
     title: "",
@@ -286,5 +286,3 @@ function CreateTicket({ onTicketCreated }) {
     </div>
   );
 }
-
-export default CreateTicket;

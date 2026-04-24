@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
-function EditTicket() {
+export default function EditTicket() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -247,4 +247,3 @@ function EditTicket() {
   );
 }
 
-export default EditTicket;

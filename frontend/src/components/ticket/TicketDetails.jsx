@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
-function TicketDetails() {
+export default function TicketDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [ticket, setTicket] = useState(null);
@@ -150,5 +150,3 @@ function TicketDetails() {
     </div>
   );
 }
-
-export default TicketDetails;

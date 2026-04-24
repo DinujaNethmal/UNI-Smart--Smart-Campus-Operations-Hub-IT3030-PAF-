@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function TicketList() {
+export default function TicketList() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [priorityFilter, setPriorityFilter] = useState("All");
@@ -201,5 +201,3 @@ function TicketList() {
     </div>
   );
 }
-
-export default TicketList;

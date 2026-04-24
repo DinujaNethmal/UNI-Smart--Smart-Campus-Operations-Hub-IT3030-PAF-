@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaFolderOpen, FaSpinner, FaCheckCircle, FaLock } from "react-icons/fa";
 
-function TicketDashboard() {
+export default function TicketDashboard() {
   const [search, setSearch] = useState("");
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -180,5 +180,3 @@ function TicketDashboard() {
     </div>
   );
 }
-
-export default TicketDashboard;
