@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import {
   LayoutDashboard, PlusSquare, CalendarCheck, Settings,
-  GraduationCap, Bell, ChevronDown, LogOut, Menu, Building2
+  GraduationCap, Bell, ChevronDown, LogOut, Menu, Building2, Ticket
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
@@ -103,6 +103,12 @@ export default function AppShell({ children }) {
             <Settings size={18} /> Manage Bookings
           </NavLink>
         )}
+
+        <div className="sidebar-section">Tickets</div>
+
+        <NavLink to="/tickets" className="sidebar-link">
+          <Ticket size={18} /> Manage Tickets
+        </NavLink>
 
         <div className="sidebar-footer" style={{ marginTop: 'auto', borderTop: '1px solid var(--slate-100)', padding: '16px 8px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontWeight: 700, color: 'var(--slate-400)' }}>

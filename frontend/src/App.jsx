@@ -6,6 +6,14 @@ import CreateBookingPage from './pages/CreateBookingPage';
 import MyBookingsPage from './pages/MyBookingsPage';
 import AdminBookingsPage from './pages/AdminBookingsPage';
 import FacilitiesPage from './pages/catalogue/FacilitiesPage';
+import RequireAuth from './components/RequireAuth'; 
+
+
+import CreateTicket from './components/ticket/CreateTicket';
+import TicketList from './components/ticket/TicketList';
+import EditTicket from './components/ticket/EditTicket';
+import TicketDetail from './components/ticket/TicketDetail';
+import TicketDashboard from './components/ticket/TicketDashboard';
 
 function App() {
   return (
@@ -25,6 +33,41 @@ function App() {
               <AdminBookingsPage />
             </RequireAdmin>
           } />
+
+          {/* Ticket Routes */}
+          <Route path="/tickets" element={
+            <RequireAuth>
+              <TicketDashboard />
+            </RequireAuth>
+          } />
+
+        
+          <Route path="/create-ticket" element={
+            <RequireAuth>
+              <CreateTicket />
+            </RequireAuth>
+          } />
+
+          
+          <Route path="/tickets-list" element={
+            <RequireAuth>
+              <TicketList />
+            </RequireAuth>
+          } />
+
+          
+          <Route path="/ticket-edit/:id" element={
+            <RequireAuth>
+              <EditTicket />
+            </RequireAuth>
+          } />
+
+          <Route path="/ticket-detail/:id" element={
+            <RequireAuth>
+              <TicketDetail />
+            </RequireAuth>
+          } />
+
         </Routes>
       </AppShell>
     </BrowserRouter>
