@@ -9,6 +9,11 @@ import com.unicampus.booking.exception.BookingConflictException;
 import com.unicampus.booking.exception.BookingNotFoundException;
 import com.unicampus.booking.exception.InvalidBookingStateException;
 import com.unicampus.booking.repository.BookingRepository;
+import com.unicampus.auth.entity.User;
+import com.unicampus.auth.enums.Role;
+import com.unicampus.auth.service.UserService;
+import com.unicampus.notification.dto.NotificationRequestDTO;
+import com.unicampus.notification.service.NotificationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,13 +24,22 @@ import java.util.stream.Collectors;
 public class BookingService {
 
     private final BookingRepository bookingRepository;
+    private final NotificationService notificationService;
+    private final UserService userService;
 
-    public BookingService(BookingRepository bookingRepository) {
+    public BookingService(
+            BookingRepository bookingRepository,
+            NotificationService notificationService,
+            UserService userService) {
         this.bookingRepository = bookingRepository;
+        this.notificationService = notificationService;
+        this.userService = userService;
     }
 
     @Transactional
     public BookingResponseDTO createBooking(BookingRequestDTO request, Long userId) {
+        User requester = userService.getUserById(userId);
+
         if (!request.getEndTime().isAfter(request.getStartTime())) {
             throw new IllegalArgumentException("End time must be after start time");
         }
@@ -54,6 +68,25 @@ public class BookingService {
         booking.setStatus(BookingStatus.PENDING);
 
         Booking saved = bookingRepository.save(booking);
+        notifyUser(
+                saved.getUserId(),
+                "Booking submitted",
+                "Your booking request for resource #" + saved.getResourceId()
+                        + " on " + saved.getBookingDate()
+                        + " from " + saved.getStartTime()
+                        + " to " + saved.getEndTime()
+                        + " has been submitted and is waiting for admin review.",
+                "BOOKING_CREATED"
+        );
+        notifyAdmins(
+                "New booking request",
+                requester.getName() + " (" + requester.getEmail() + ") submitted a booking request for resource #" + saved.getResourceId()
+                        + " on " + saved.getBookingDate()
+                        + " from " + saved.getStartTime()
+                        + " to " + saved.getEndTime()
+                        + ".",
+                "ADMIN_BOOKING_CREATED"
+        );
         return BookingResponseDTO.fromEntity(saved);
     }
 
@@ -116,11 +149,38 @@ public class BookingService {
         }
 
         Booking updated = bookingRepository.save(booking);
+        if (updated.getStatus() == BookingStatus.APPROVED) {
+            notifyUser(
+                    updated.getUserId(),
+                    "Booking approved",
+                    "Your booking for resource #" + updated.getResourceId()
+                            + " on " + updated.getBookingDate()
+                            + " from " + updated.getStartTime()
+                            + " to " + updated.getEndTime()
+                            + " has been approved.",
+                    "BOOKING_APPROVED"
+            );
+        } else {
+            String rejectionSuffix = (updated.getRejectionReason() != null && !updated.getRejectionReason().isBlank())
+                    ? " Reason: " + updated.getRejectionReason()
+                    : "";
+            notifyUser(
+                    updated.getUserId(),
+                    "Booking rejected",
+                    "Your booking for resource #" + updated.getResourceId()
+                            + " on " + updated.getBookingDate()
+                            + " from " + updated.getStartTime()
+                            + " to " + updated.getEndTime()
+                            + " was rejected." + rejectionSuffix,
+                    "BOOKING_REJECTED"
+            );
+        }
         return BookingResponseDTO.fromEntity(updated);
     }
 
     @Transactional
     public BookingResponseDTO cancelBooking(Long bookingId, Long userId) {
+        User requester = userService.getUserById(userId);
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
 
@@ -137,6 +197,39 @@ public class BookingService {
 
         booking.setStatus(BookingStatus.CANCELLED);
         Booking updated = bookingRepository.save(booking);
+        notifyUser(
+                updated.getUserId(),
+                "Booking cancelled",
+                "Your booking for resource #" + updated.getResourceId()
+                        + " on " + updated.getBookingDate()
+                        + " from " + updated.getStartTime()
+                        + " to " + updated.getEndTime()
+                        + " has been cancelled.",
+                "BOOKING_CANCELLED"
+        );
+        notifyAdmins(
+                "Booking cancelled by user",
+                requester.getName() + " (" + requester.getEmail() + ") cancelled a booking for resource #" + updated.getResourceId()
+                        + " on " + updated.getBookingDate()
+                        + " from " + updated.getStartTime()
+                        + " to " + updated.getEndTime() + ".",
+                "ADMIN_BOOKING_CANCELLED"
+        );
         return BookingResponseDTO.fromEntity(updated);
+    }
+
+    private void notifyUser(Long userId, String title, String message, String type) {
+        NotificationRequestDTO notification = new NotificationRequestDTO();
+        notification.setRecipientUserId(userId);
+        notification.setTitle(title);
+        notification.setMessage(message);
+        notification.setType(type);
+        notificationService.createNotification(notification);
+    }
+
+    private void notifyAdmins(String title, String message, String type) {
+        for (User admin : userService.getActiveUsersByRole(Role.ADMIN)) {
+            notifyUser(admin.getId(), title, message, type);
+        }
     }
 }

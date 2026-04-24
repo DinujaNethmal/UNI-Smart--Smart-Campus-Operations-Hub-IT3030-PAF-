@@ -5,9 +5,12 @@ import com.unicampus.booking.dto.BookingResponseDTO;
 import com.unicampus.booking.dto.BookingReviewRequestDTO;
 import com.unicampus.booking.entity.BookingStatus;
 import com.unicampus.booking.service.BookingService;
+import com.unicampus.auth.security.CustomUserPrincipal;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,19 +30,21 @@ import java.util.List;
     }
 
     @PostMapping
-    public ResponseEntity<BookingResponseDTO> createBooking(@Valid @RequestBody BookingRequestDTO request) {
-        Long userId = 1L;
-        BookingResponseDTO response = bookingService.createBooking(request, userId);
+    public ResponseEntity<BookingResponseDTO> createBooking(
+            @Valid @RequestBody BookingRequestDTO request,
+            @AuthenticationPrincipal CustomUserPrincipal principal) {
+        BookingResponseDTO response = bookingService.createBooking(request, principal.getUserId());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/me")
-    public ResponseEntity<List<BookingResponseDTO>> getMyBookings() {
-        Long userId = 1L;
-        return ResponseEntity.ok(bookingService.getBookingsForUser(userId));
+    public ResponseEntity<List<BookingResponseDTO>> getMyBookings(
+            @AuthenticationPrincipal CustomUserPrincipal principal) {
+        return ResponseEntity.ok(bookingService.getBookingsForUser(principal.getUserId()));
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<BookingResponseDTO>> getAllBookings(
             @RequestParam(required = false) BookingStatus status) {
         return ResponseEntity.ok(bookingService.getAllBookings(status));
@@ -51,6 +56,7 @@ import java.util.List;
     }
 
     @PatchMapping("/{id}/review")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<BookingResponseDTO> reviewBooking(
             @PathVariable Long id,
             @Valid @RequestBody BookingReviewRequestDTO review) {
@@ -58,8 +64,9 @@ import java.util.List;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<BookingResponseDTO> cancelBooking(@PathVariable Long id) {
-        Long userId = 1L;
-        return ResponseEntity.ok(bookingService.cancelBooking(id, userId));
+    public ResponseEntity<BookingResponseDTO> cancelBooking(
+            @PathVariable Long id,
+            @AuthenticationPrincipal CustomUserPrincipal principal) {
+        return ResponseEntity.ok(bookingService.cancelBooking(id, principal.getUserId()));
     }
 }
