@@ -43,7 +43,7 @@ export default function TicketDetail() {
     }));
 
     // 👉 later you can call backend API here
-    // fetch(`http://localhost:8081/api/tickets/${id}/status`, {...})
+    //fetch(`http://localhost:8081/api/tickets/${id}/status`, {...})
   };
 
   return (
@@ -58,7 +58,7 @@ export default function TicketDetail() {
       <div className="ticket-card">
 
         <h2>{ticket.title}</h2>
-        <p className="ticket-id">#{ticket.id}</p>
+        <p className="ticket-id">{ticket.id}</p>
 
         {/* GRID */}
         <div className="ticket-grid">
@@ -113,6 +113,8 @@ export default function TicketDetail() {
             ))}
           </div>
         )}
+
+
 
         {/* ACTIONS */}
         <div className="ticket-actions">

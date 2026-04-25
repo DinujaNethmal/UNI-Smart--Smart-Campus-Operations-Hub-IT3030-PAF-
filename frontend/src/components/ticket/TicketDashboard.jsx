@@ -136,14 +136,14 @@ export default function TicketDashboard() {
           </div><br/>
 
           {/* Updated Search Bar */}
-          <div className="flex items-center bg-gray-100 rounded-lg px-3 py-2 shadow-inner">
-            <Search size={18} className="text-gray-500 mr-2" />
+          {/* SEARCH BAR */}
+          <div className="ticket-dashboard-toolbar">
             <input
               type="text"
-              placeholder="Search by name, type, or location..."
+              placeholder="Search tickets, users, etc..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-500"
+              className="dashboard-search"
             />
           </div><br/>
 
@@ -166,7 +166,7 @@ export default function TicketDashboard() {
                   <div className="booking-item-header">
                     <div>
                       <div style={{ fontWeight: 600 }}>
-                        #{t.id} - {t.title}
+                        {t.id} - {t.title}
                       </div>
                       <div className="text-muted">
                         {t.resource}
@@ -184,6 +184,8 @@ export default function TicketDashboard() {
                       {t.priority}
                     </span>
                   </div>
+                  <br/>
+                  
 
                   <div className="booking-actions flex gap-3 mt-3">
                     <button

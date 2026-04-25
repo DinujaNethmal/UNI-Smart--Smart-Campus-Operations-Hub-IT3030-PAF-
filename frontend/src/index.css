@@ -2166,3 +2166,11 @@ button:disabled {
   color: white;
 }
 
+.ticket-dashboard-search {
+  width: 300px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}

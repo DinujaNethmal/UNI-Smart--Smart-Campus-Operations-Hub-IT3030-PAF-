@@ -101,7 +101,7 @@ export default function EditTicket() {
 
         {/* Category */}
         <div className="form-group">
-          <label className="form-label">Category *</label>
+          <label className="form-label">Category </label>
           <div className="form-input-wrap">
             <Tag size={16} className="input-icon" />
             <select
@@ -122,7 +122,7 @@ export default function EditTicket() {
 
         {/* Title */}
         <div className="form-group">
-          <label className="form-label">Title *</label>
+          <label className="form-label">Title </label>
           <div className="form-input-wrap">
             <FileText size={16} className="input-icon" />
             <input
@@ -138,7 +138,7 @@ export default function EditTicket() {
 
         {/* Resource */}
         <div className="form-group">
-          <label className="form-label">Location *</label>
+          <label className="form-label">Location </label>
           <div className="form-input-wrap">
             <MapPin size={16} className="input-icon" />
             <input
@@ -154,7 +154,7 @@ export default function EditTicket() {
 
         {/* Description */}
         <div className="form-group">
-          <label className="form-label">Description *</label>
+          <label className="form-label">Description </label>
           <textarea
             name="description"
             value={form.description || ""}
@@ -167,7 +167,7 @@ export default function EditTicket() {
 
         {/* Priority */}
         <div className="form-group">
-          <label className="form-label">Priority *</label>
+          <label className="form-label">Priority </label>
           <div className="form-input-wrap">
             <Flag size={16} className="input-icon" />
             <select
@@ -187,7 +187,7 @@ export default function EditTicket() {
 
         {/* Status */}
         <div className="form-group">
-          <label className="form-label">Status *</label>
+          <label className="form-label">Status </label>
           <div className="form-input-wrap">
             <select
               name="status"
@@ -204,26 +204,12 @@ export default function EditTicket() {
           </div>
         </div>
 
-        {/* Assigned */}
-        <div className="form-group">
-          <label className="form-label">Assign To</label>
-          <div className="form-input-wrap">
-            <input
-              type="text"
-              name="assignedTo"
-              value={form.assignedTo || ""}
-              onChange={handleChange}
-              className="form-input"
-              placeholder="Technician name"
-            />
-          </div>
-        </div>
 
         {/* CONTACT SECTION */}
         <div className="form-section-title">Contact Information</div>
 
         <div className="form-group">
-          <label className="form-label">Name *</label>
+          <label className="form-label">Name </label>
           <div className="form-input-wrap">
             <User size={16} className="input-icon" />
             <input
@@ -238,7 +224,7 @@ export default function EditTicket() {
         </div>
 
         <div className="form-group">
-          <label className="form-label">Phone *</label>
+          <label className="form-label">Phone </label>
           <div className="form-input-wrap">
             <Phone size={16} className="input-icon" />
             <input
@@ -253,7 +239,7 @@ export default function EditTicket() {
         </div>
 
         <div className="form-group">
-          <label className="form-label">Email *</label>
+          <label className="form-label">Email </label>
           <div className="form-input-wrap">
             <Mail size={16} className="input-icon" />
             <input

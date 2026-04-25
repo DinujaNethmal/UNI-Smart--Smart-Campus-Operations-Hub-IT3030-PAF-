@@ -68,7 +68,7 @@ export default function TicketList() {
             {tickets.map((ticket) => (
               <tr key={ticket.id}>
 
-                <td>#{ticket.id}</td>
+                <td>{ticket.id}</td>
                 <td>{ticket.title}</td>
                 <td>{ticket.resource}</td>
 
