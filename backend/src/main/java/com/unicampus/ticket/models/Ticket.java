@@ -22,6 +22,7 @@ public class Ticket {
     private String status = "OPEN"; // default
 
     private LocalDateTime createdAt = LocalDateTime.now();
+    
 
     @ElementCollection
     private List<String> images = new ArrayList<>();
@@ -59,4 +60,12 @@ public class Ticket {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
 }

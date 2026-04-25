@@ -31,27 +31,67 @@ export default function CreateTicket() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Handle text input
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     setError(null);
   };
 
+  // Handle image selection (add multiple times)
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    // Validate size (2MB max)
+    const validFiles = files.filter(file => file.size <= 2 * 1024 * 1024);
+
+    if (validFiles.length !== files.length) {
+      setError("Some images were removed (max size 2MB each)");
+    }
+
+    // Append images
+    setImages(prev => [...prev, ...validFiles]);
+
+    // Reset input so same file can be reselected
+    e.target.value = null;
+  };
+
+  // Remove image
+  const removeImage = (indexToRemove) => {
+    setImages(prev => prev.filter((_, index) => index !== indexToRemove));
+  };
+
+  // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      await fetch("http://localhost:8081/api/tickets", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      const formDataToSend = new FormData();
+
+      // Append text fields
+      Object.keys(formData).forEach((key) => {
+        formDataToSend.append(key, formData[key]);
       });
+
+      // Append images
+      images.forEach((image) => {
+        formDataToSend.append("images", image);
+      });
+
+      const response = await fetch("http://localhost:8081/api/tickets", {
+        method: "POST",
+        body: formDataToSend
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit ticket");
+      }
 
       navigate("/tickets-list");
     } catch (err) {
-      setError("Failed to submit ticket");
+      setError(err.message || "Failed to submit ticket");
     } finally {
       setLoading(false);
     }
@@ -86,7 +126,7 @@ export default function CreateTicket() {
 
         {/* Category */}
         <div className="form-group">
-          <label className="form-label">Category *</label>
+          <label className="form-label">Category </label>
           <div className="form-input-wrap">
             <Tag size={16} className="input-icon" />
             <select
@@ -107,7 +147,7 @@ export default function CreateTicket() {
 
         {/* Title */}
         <div className="form-group">
-          <label className="form-label">Title *</label>
+          <label className="form-label">Title </label>
           <div className="form-input-wrap">
             <FileText size={16} className="input-icon" />
             <input
@@ -122,9 +162,9 @@ export default function CreateTicket() {
           </div>
         </div>
 
-        {/* Resource */}
+        {/* Location */}
         <div className="form-group">
-          <label className="form-label">Location *</label>
+          <label className="form-label">Location </label>
           <div className="form-input-wrap">
             <MapPin size={16} className="input-icon" />
             <input
@@ -141,23 +181,84 @@ export default function CreateTicket() {
 
         {/* Description */}
         <div className="form-group">
-          <label className="form-label">Description *</label>
+          <label className="form-label">Description </label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             className="form-textarea"
-            placeholder="Provide detailed information about the issue..."
             rows={4}
             required
           />
         </div>
 
-        
+        {/* Image Upload */}
+        <div className="form-group">
+          <label className="form-label">Upload Images(Max 3)</label>
+
+          <div className="form-input-wrap">
+            <Upload size={16} className="input-icon" />
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={handleImageChange}
+              className="form-input"
+            />
+          </div>
+
+          {/* Preview with Remove */}
+          {images.length > 0 && (
+            <div style={{
+              display: "flex",
+              gap: "10px",
+              marginTop: "10px",
+              flexWrap: "wrap"
+            }}>
+              {images.map((img, index) => (
+                <div key={index} style={{ position: "relative" }}>
+                  
+                  <img
+                    src={URL.createObjectURL(img)}
+                    alt="preview"
+                    width="80"
+                    height="80"
+                    style={{
+                      objectFit: "cover",
+                      borderRadius: "8px"
+                    }}
+                  />
+
+                  {/* Remove Button */}
+                  <button
+                    type="button"
+                    onClick={() => removeImage(index)}
+                    style={{
+                      position: "absolute",
+                      top: "-5px",
+                      right: "-5px",
+                      background: "red",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "50%",
+                      width: "20px",
+                      height: "20px",
+                      cursor: "pointer",
+                      fontSize: "12px"
+                    }}
+                  >
+                    ×
+                  </button>
+
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Priority */}
         <div className="form-group">
-          <label className="form-label">Priority *</label>
+          <label className="form-label">Priority </label>
           <div className="form-input-wrap">
             <Flag size={16} className="input-icon" />
             <select
@@ -180,7 +281,7 @@ export default function CreateTicket() {
 
         {/* Name */}
         <div className="form-group">
-          <label className="form-label">Name *</label>
+          <label className="form-label">Name </label>
           <div className="form-input-wrap">
             <User size={16} className="input-icon" />
             <input
@@ -196,7 +297,7 @@ export default function CreateTicket() {
 
         {/* Phone */}
         <div className="form-group">
-          <label className="form-label">Phone *</label>
+          <label className="form-label">Phone </label>
           <div className="form-input-wrap">
             <Phone size={16} className="input-icon" />
             <input
@@ -212,7 +313,7 @@ export default function CreateTicket() {
 
         {/* Email */}
         <div className="form-group">
-          <label className="form-label">Email *</label>
+          <label className="form-label">Email </label>
           <div className="form-input-wrap">
             <Mail size={16} className="input-icon" />
             <input
@@ -226,7 +327,7 @@ export default function CreateTicket() {
           </div>
         </div>
 
-        {/* Info */}
+        {/* Note */}
         <div className="form-note">
           <strong>Note:</strong> Your ticket will be reviewed by the maintenance team.
         </div>
