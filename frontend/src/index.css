@@ -2193,4 +2193,3 @@ button:disabled {
 .booking-entry-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
 .booking-entry-timestamp { font-size: 0.75rem; color: var(--slate-400); }
 .booking-entry-actions { display: flex; gap: 8px; margin-top: 8px; }
-'@ | Add-Content -Path "frontend/src/index.css"
