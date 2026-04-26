@@ -1,0 +1,16 @@
+com\unicampus\booking\dto\BookingRequestDTO.class
+com\unicampus\booking\entity\BookingStatus.class
+com\unicampus\booking\exception\BookingConflictException.class
+com\unicampus\booking\exception\GlobalExceptionHandler.class
+com\unicampus\booking\BookingApplication.class
+com\unicampus\booking\service\BookingService.class
+com\unicampus\booking\exception\BookingNotFoundException.class
+com\unicampus\booking\controller\BookingController.class
+com\unicampus\booking\entity\Booking$BookingBuilder.class
+com\unicampus\booking\entity\Booking.class
+com\unicampus\booking\dto\BookingResponseDTO.class
+com\unicampus\booking\dto\BookingReviewRequestDTO.class
+com\unicampus\booking\repository\BookingRepository.class
+com\unicampus\booking\config\CorsConfig.class
+com\unicampus\booking\exception\InvalidBookingStateException.class
+com\unicampus\booking\dto\BookingReviewRequestDTO$ReviewDecision.class
