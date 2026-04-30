@@ -1,0 +1,30 @@
+$kind: http-request
+name: Get Products (Verify New Product)
+url: http://localhost:5000/api/products
+method: GET
+headers:
+  - key: Authorization
+    value: Bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2VjNGQxNWE0YTRjN2VkYjkwYjA3NSIsImVtYWlsIjoiYWRtaW5Ac2xpaXQubGsiLCJpYXQiOjE3NzY4Nzc0MzUsImV4cCI6MTc3NzQ4MjIzNX0.CKdyRhvESqD1jT0_RtFqI7co_Fji3GusuUwBIpwJvlI
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: "{\r
+
+    \  \"name\": \"Test Product from Postman\",\r
+
+    \  \"description\": \"Testing marketplace create product\",\r
+
+    \  \"price\": 500,\r
+
+    \  \"quantity\": 2,\r
+
+    \  \"category\": \"Textbooks\",\r
+
+    \  \"condition\": \"Used - Good\",\r
+
+    \  \"imageUrl\": \"https://example.com/test.jpg\"\r
+
+    }"
+order: 4460015727265327

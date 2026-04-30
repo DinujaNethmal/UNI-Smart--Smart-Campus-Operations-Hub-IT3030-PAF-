@@ -1,0 +1,202 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+}
+
+a {
+  color: #1E3A8A;
+  text-decoration: none;
+  margin: 0 12px;
+  font-weight: 600;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.navbar {
+  background: white;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  padding: 16px;
+  text-align: center;
+}
+
+.page-container {
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 24px;
+}
+
+.content-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #1E3A8A;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.error-text {
+  color: red;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.card-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.booking-card {
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.booking-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1E3A8A;
+  margin-bottom: 8px;
+}
+
+.booking-meta {
+  color: #475569;
+  margin: 6px 0;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.status-approved {
+  background: #dbeafe;
+  color: #1E3A8A;
+  border-color: #93c5fd;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: #fcd34d;
+}
+
+.status-rejected {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+.status-cancelled {
+  background: #e2e8f0;
+  color: #475569;
+  border-color: #cbd5e1;
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  flex: 1;
+}
+
+.btn-primary {
+  background: #1E3A8A;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #152B66;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+}
+
+.btn-outline-danger {
+  background: white;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+}
+
+.btn-outline-danger:hover {
+  background: #fef2f2;
+}
+
+.form-box {
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.form-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #1E3A8A;
+  margin-bottom: 8px;
+}
+
+.form-subtitle {
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #94a3b8;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
