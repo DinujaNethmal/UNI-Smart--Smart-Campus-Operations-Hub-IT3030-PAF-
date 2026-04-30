@@ -17,11 +17,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/bookings")
-@CrossOrigin(origins = {
-    "http://localhost:5173",
-    "http://localhost:5175",
-    "http://localhost:5180"
-})public class BookingController {
+@CrossOrigin(originPatterns = "http://localhost:*")
+public class BookingController {
 
     private final BookingService bookingService;
 

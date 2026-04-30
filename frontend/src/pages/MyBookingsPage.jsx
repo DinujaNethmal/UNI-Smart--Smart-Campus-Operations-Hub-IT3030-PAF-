@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CalendarDays, Clock, Users, AlertCircle, CalendarX, PlusSquare, QrCode } from 'lucide-react';
+import { CalendarDays, Clock, Users, AlertCircle, CalendarX, PlusSquare, QrCode, CheckCircle2, XCircle } from 'lucide-react';
 import { getMyBookings, cancelBooking } from '../api/bookingApi';
 import { formatDate, formatTime } from '../utils/dateUtils';
 import QRCodeModal from '../components/bookings/QRCodeModal';

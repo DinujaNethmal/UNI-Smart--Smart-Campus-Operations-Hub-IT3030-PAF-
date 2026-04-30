@@ -5,8 +5,9 @@ import {
   PlusSquare, CalendarCheck, Layers
 } from 'lucide-react';
 import heroImg from '../assets/hero.png';
-import { getAllBookings } from '../api/bookingApi';
+import { getAllBookings, getMyBookings } from '../api/bookingApi';
 import { formatDate, formatTime } from '../utils/dateUtils';
+import { useAuth } from '../hooks/useAuth';
 
 const badgeClass = (s) =>
   s === 'APPROVED' ? 'badge badge-approved'
@@ -16,10 +17,12 @@ const badgeClass = (s) =>
 
 export default function DashboardPage() {
   const [bookings, setBookings] = useState([]);
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
-    getAllBookings().then(setBookings).catch(() => {});
-  }, []);
+    const loadBookings = isAdmin ? getAllBookings : getMyBookings;
+    loadBookings().then(setBookings).catch(() => {});
+  }, [isAdmin]);
 
   const pending = bookings.filter(b => b.status === 'PENDING').length;
   const approved = bookings.filter(b => b.status === 'APPROVED').length;
